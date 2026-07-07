@@ -20,10 +20,10 @@ export interface KineticRevealOptions {
  * and animates each fragment up + in. Returns the SplitType instance so callers
  * can `.revert()` it on unmount (important to avoid memory leaks on route change).
  */
-export function kineticReveal(target: string | Element, options: KineticRevealOptions = {}) {
+export function kineticReveal(target: string | HTMLElement, options: KineticRevealOptions = {}) {
   const { by = 'words', delay = 0, stagger = STAGGER.base, y = '110%', scrollTrigger = false, trigger } = options
 
-  const split = new SplitType(target as Element, { types: `${by}` as any })
+  const split = new SplitType(target as HTMLElement, { types: `${by}` as any })
   const fragments = by === 'chars' ? split.chars : by === 'lines' ? split.lines : split.words
 
   if (!fragments || fragments.length === 0) return split

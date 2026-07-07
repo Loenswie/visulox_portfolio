@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { getAdjacentProject, getProjectBySlug } from '@/data/projects'
 import { useHead } from '@/composables/useHead'
@@ -21,8 +22,10 @@ useHead(() => ({
   image: project.value?.heroImage
 }))
 
-function setGalleryRef(el: Element | null, i: number) {
-  if (el) galleryRefs.value[i] = el as HTMLElement
+// See StatsStrip.vue for why this is typed against Element | ComponentPublicInstance
+// rather than just Element — that's the actual type Vue's `:ref` callback passes.
+function setGalleryRef(el: Element | ComponentPublicInstance | null, i: number) {
+  if (el instanceof HTMLElement) galleryRefs.value[i] = el
 }
 
 onMounted(() => {

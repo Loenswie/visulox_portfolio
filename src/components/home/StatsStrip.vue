@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 import { counterOnScroll } from '@/animations/reveal'
 
 const stripEl = ref<HTMLElement | null>(null)
@@ -13,8 +14,12 @@ const stats = [
 
 const counterRefs = ref<(HTMLElement | null)[]>([])
 
-function setCounterRef(el: Element | null, i: number) {
-  counterRefs.value[i] = el as HTMLElement | null
+// Typed against what Vue's `:ref` callback actually hands back (it can be a
+// component instance, not just a DOM element, depending on what's bound) —
+// narrowing to HTMLElement here rather than declaring the narrower `Element`
+// type is what the inline callback below needs to type-check.
+function setCounterRef(el: Element | ComponentPublicInstance | null, i: number) {
+  counterRefs.value[i] = el instanceof HTMLElement ? el : null
 }
 
 onMounted(() => {
