@@ -1,0 +1,165 @@
+[
+  {
+    "title": "Noctua",
+    "slug": "noctua",
+    "showBehance": true,
+    "categories": ["Branding"],
+    "thumbnail": "https://picsum.photos/seed/visulox-noctua-thumb/1200/1500",
+    "heroImage": "https://picsum.photos/seed/visulox-noctua-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-noctua-g1/1600/2000",
+      "https://picsum.photos/seed/visulox-noctua-g2/1800/1200",
+      "https://picsum.photos/seed/visulox-noctua-g3/1600/1600",
+      "https://picsum.photos/seed/visulox-noctua-g4/1800/1200"
+    ],
+    "shortDescription": "A nocturnal identity system for a Brussels late-night listening bar, built on shadow, brass and a single recurring mark.",
+    "longDescription": "Noctua asked for an identity that could survive both a matchbook and a projection wall. We built the system around a single owl-eye mark, a restrained brass-on-black palette, and a type pairing sharp enough to read across a dim room. The wordmark bends slightly at the O, a quiet nod to the venue's curved bar, and the whole system was stress-tested across signage, glassware, playlists and a monthly print zine before a single pixel was signed off.",
+    "services": ["Brand Strategy", "Visual Identity", "Signage & Environmental Design", "Print Collateral"],
+    "technologies": ["Illustrator", "Photoshop", "Figma", "Risograph Print"],
+    "featured": true,
+    "externalLink": "",
+    "behanceLink": "https://behance.net/visulox"
+  },
+  {
+    "title": "Ferra Studio",
+    "slug": "ferra-studio",
+    "showBehance": true,
+    "categories": ["Web Design", "Development"],
+    "thumbnail": "https://picsum.photos/seed/visulox-ferra-thumb/1400/1050",
+    "heroImage": "https://picsum.photos/seed/visulox-ferra-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-ferra-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-ferra-g2/1600/2000",
+      "https://picsum.photos/seed/visulox-ferra-g3/1800/1200"
+    ],
+    "shortDescription": "An editorial site for an architecture studio, built around raw concrete photography and a slow, deliberate scroll pace.",
+    "longDescription": "Ferra needed a site that behaved like their buildings: quiet, load-bearing, unhurried. The layout leans on oversized material photography and long-form project narratives rather than grids of thumbnails. Every transition was tuned to a deliberately slow pace, nothing on this site moves faster than a visitor can read a caption. The CMS was structured so the studio's own team can publish new work without touching code.",
+    "services": ["Web Design", "Art Direction", "CMS Architecture", "Motion Design"],
+    "technologies": ["Vue 3", "GSAP", "Sanity CMS", "Vercel"],
+    "featured": true,
+    "externalLink": "",
+    "behanceLink": "https://behance.net/visulox"
+  },
+  {
+    "title": "Kinet",
+    "slug": "kinet",
+    "showBehance": false,
+    "categories": ["Development"],
+    "thumbnail": "https://picsum.photos/seed/visulox-kinet-thumb/1200/1500",
+    "heroImage": "https://picsum.photos/seed/visulox-kinet-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-kinet-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-kinet-g2/1800/1200",
+      "https://picsum.photos/seed/visulox-kinet-g3/1600/1600"
+    ],
+    "shortDescription": "Design system + front-end architecture for a motion-capture SaaS platform used by animation studios across Europe.",
+    "longDescription": "Kinet came to us with a powerful engine and an interface that fought its own users. We rebuilt the design system from primitives up: a typed component library, a token pipeline shared between Figma and code, and a rendering layer optimized to keep 3D preview panels above 50fps even on mid-range laptops. This is the project that best represents the VISULOX hybrid: the visual system and the codebase were designed as one artifact, not handed off between disciplines.",
+    "services": ["Design Systems", "Frontend Engineering", "Performance Optimization", "Technical Direction"],
+    "technologies": ["TypeScript", "Vue 3", "WebGL", "Storybook", "Node.js"],
+    "featured": true,
+    "externalLink": "",
+    "behanceLink": ""
+  },
+  {
+    "title": "Monolith Records",
+    "slug": "monolith-records",
+    "showBehance": true,
+    "categories": ["Campaigns"],
+    "thumbnail": "https://picsum.photos/seed/visulox-monolith-thumb/1400/1050",
+    "heroImage": "https://picsum.photos/seed/visulox-monolith-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-monolith-g1/1600/2000",
+      "https://picsum.photos/seed/visulox-monolith-g2/1800/1200",
+      "https://picsum.photos/seed/visulox-monolith-g3/1600/2000",
+      "https://picsum.photos/seed/visulox-monolith-g4/1800/1200"
+    ],
+    "shortDescription": "Tour campaign visuals and social system for an underground label's first European headline run.",
+    "longDescription": "A six-city tour campaign built entirely in high-contrast monochrome with a single recurring crack motif: torn posters, glitched type, a visual language that photographs well on a phone screen from the back of a venue. We delivered a modular kit (posters, story templates, merch, a countdown microsite) the label's own team could recombine city by city without losing the system's spine.",
+    "services": ["Campaign Direction", "Poster & Print Design", "Social Templates", "Microsite Build"],
+    "technologies": ["Photoshop", "After Effects", "Webflow"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": "https://behance.net/visulox"
+  },
+  {
+    "title": "Terra Nomad",
+    "slug": "terra-nomad",
+    "showBehance": true,
+    "categories": ["Photography"],
+    "thumbnail": "https://picsum.photos/seed/visulox-terra-thumb/1200/1500",
+    "heroImage": "https://picsum.photos/seed/visulox-terra-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-terra-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-terra-g2/1600/2000",
+      "https://picsum.photos/seed/visulox-terra-g3/1800/1200",
+      "https://picsum.photos/seed/visulox-terra-g4/1600/2000"
+    ],
+    "shortDescription": "A self-initiated editorial series shot across the North Sea coastline, grain, salt, and long horizons.",
+    "longDescription": "Terra Nomad started as a weekend habit and became a 40-roll archive. Shot entirely on expired film, the series leans into the medium's imperfections rather than correcting them in post, light leaks, grain clumping, and the occasional scratch are treated as part of the composition. A selection of 18 frames was later exhibited at a small gallery show in Ghent.",
+    "services": ["Photography", "Film Development", "Curation", "Print Production"],
+    "technologies": ["35mm Film", "Lightroom", "Risograph Print"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": "https://behance.net/visulox"
+  },
+  {
+    "title": "Aether",
+    "slug": "aether",
+    "showBehance": false,
+    "categories": ["Digital Experiences", "Development"],
+    "thumbnail": "https://picsum.photos/seed/visulox-aether-thumb/1400/1050",
+    "heroImage": "https://picsum.photos/seed/visulox-aether-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-aether-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-aether-g2/1600/1600",
+      "https://picsum.photos/seed/visulox-aether-g3/1800/1200"
+    ],
+    "shortDescription": "A cursor-reactive WebGL lookbook for an experimental fashion label's SS25 collection drop.",
+    "longDescription": "Aether is a single-page, single-purpose experience: sixteen looks, one continuous scroll, and a subtle displacement shader that responds to cursor velocity rather than position. The faster you move, the more the fabric seems to ripple. Heavy effects were reserved for desktop; the mobile build swaps the shader for a lighter, still-cinematic mask-reveal sequence so the experience never feels like a compromise.",
+    "services": ["Creative Direction", "WebGL Development", "Interaction Design", "Art Direction"],
+    "technologies": ["Three.js", "GLSL", "Vue 3", "GSAP"],
+    "featured": true,
+    "externalLink": "",
+    "behanceLink": ""
+  },
+  {
+    "title": "Vantage Capital",
+    "slug": "vantage-capital",
+    "showBehance": true,
+    "categories": ["Branding", "Web Design"],
+    "thumbnail": "https://picsum.photos/seed/visulox-vantage-thumb/1200/1500",
+    "heroImage": "https://picsum.photos/seed/visulox-vantage-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-vantage-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-vantage-g2/1800/1200",
+      "https://picsum.photos/seed/visulox-vantage-g3/1600/2000"
+    ],
+    "shortDescription": "A full rebrand for a fintech challenger, from wordmark to statement templates to the pitch deck that closed their Series A.",
+    "longDescription": "Vantage needed to look credible to institutional investors without losing the edge that made them interesting in the first place. We rebuilt their mark as a monoline chevron system, paired it with a restrained serif for long-form trust documents and a grotesk for product UI, then extended the system into their actual banking app and the deck their founders used to raise.",
+    "services": ["Brand Strategy", "Visual Identity", "UI Design", "Pitch Deck Design"],
+    "technologies": ["Figma", "Illustrator", "Keynote"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": "https://behance.net/visulox"
+  },
+  {
+    "title": "Echo Chamber",
+    "slug": "echo-chamber",
+    "showBehance": false,
+    "categories": ["Development", "Digital Experiences"],
+    "thumbnail": "https://picsum.photos/seed/visulox-echo-thumb/1400/1050",
+    "heroImage": "https://picsum.photos/seed/visulox-echo-hero/2400/1350",
+    "galleryImages": [
+      "https://picsum.photos/seed/visulox-echo-g1/1800/1200",
+      "https://picsum.photos/seed/visulox-echo-g2/1600/1600",
+      "https://picsum.photos/seed/visulox-echo-g3/1800/1200"
+    ],
+    "shortDescription": "A browser-based, audio-reactive visualizer built for an independent electronic artist's album launch.",
+    "longDescription": "Echo Chamber analyzes an uploaded track in real time via the Web Audio API and drives a full-screen particle field from its frequency data, no two plays render quite the same. It shipped as a free browser toy timed to the artist's album release and was later adapted into a live visual set for two festival performances.",
+    "services": ["Concept & Development", "Audio-Reactive Visuals", "Creative Coding"],
+    "technologies": ["TypeScript", "Web Audio API", "Canvas", "GSAP"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
+  }
+]

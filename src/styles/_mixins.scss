@@ -1,0 +1,85 @@
+@use 'variables' as v;
+
+@mixin mobile {
+  @media (max-width: #{v.$bp-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{v.$bp-tablet}) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media (max-width: #{v.$bp-laptop}) {
+    @content;
+  }
+}
+
+@mixin desktop-up {
+  @media (min-width: #{v.$bp-desktop}) {
+    @content;
+  }
+}
+
+@mixin fine-pointer-only {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}
+
+@mixin container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@mixin eyebrow {
+  font-family: var(--font-body);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-cream-dim);
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 1.5px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+}
+
+@mixin hairline($side: bottom, $color: var(--color-border)) {
+  border-#{$side}: 1px solid $color;
+}
+
+// Sharp-cornered "white chip / black text" tag list — the shared display for
+// any short list of terms (a project's categories, services, technologies).
+// One definition so the work-overview cards, the project detail hero and the
+// services/technologies lists all stay visually identical.
+@mixin chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+
+  li {
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    padding: 6px 10px;
+    line-height: 1;
+  }
+}

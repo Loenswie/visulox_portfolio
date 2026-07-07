@@ -1,0 +1,79 @@
+// ============================================================
+// VISULOX — Design Tokens
+// "Raw Editorial Grunge": dark luxury minimalism + grunge texture
+// ============================================================
+
+:root {
+  // ---- Color ----------------------------------------------
+  --color-ink: #050505;
+  --color-ink-soft: #0c0c0c;
+  --color-cream: #f3ecdf;
+  --color-cream-dim: #f3ecdf99;
+  --color-cream-faint: #f3ecdf33;
+  --color-accent: #693dae;
+  --color-accent-soft: #693dae66;
+  --color-border: rgba(243, 236, 223, 0.1);
+  --color-border-strong: rgba(243, 236, 223, 0.22);
+
+  // ---- Typography -------------------------------------------
+  --font-display: 'Unbounded', 'Helvetica Neue', sans-serif;
+  --font-body: 'Manrope', 'Helvetica Neue', sans-serif;
+
+  --fs-hero: clamp(3.2rem, 11vw, 10.5rem);
+  --fs-display-lg: clamp(2.6rem, 7.2vw, 6.4rem);
+  --fs-display-md: clamp(2rem, 4.8vw, 4rem);
+  --fs-display-sm: clamp(1.5rem, 3vw, 2.4rem);
+  --fs-body-lg: clamp(1.1rem, 1.6vw, 1.4rem);
+  --fs-body: 1rem;
+  --fs-small: 0.8125rem;
+  --fs-micro: 0.6875rem;
+
+  --tracking-tight: -0.055em;
+  --tracking-tighter: -0.09em;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.22em;
+
+  --lh-tight: 0.94;
+  --lh-normal: 1.5;
+
+  // ---- Spacing ------------------------------------------------
+  --space-1: 0.5rem;
+  --space-2: 0.75rem;
+  --space-3: 1.25rem;
+  --space-4: 2rem;
+  --space-5: 3.25rem;
+  --space-6: 5rem;
+  --space-7: 8rem;
+  --space-8: 12rem;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+
+  // ---- Motion ----------------------------------------------
+  --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out-quad: cubic-bezier(0.25, 1, 0.5, 1);
+
+  --dur-fast: 0.35s;
+  --dur-base: 0.7s;
+  --dur-slow: 1.2s;
+  --dur-cinematic: 1.9s;
+
+  // ---- Layout -----------------------------------------------
+  --nav-height: 92px;
+  --max-width: 1680px;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --cursor-size: 14px;
+
+  // ---- Z-index scale -----------------------------------------
+  --z-cursor: 900;
+  --z-nav: 500;
+  --z-overlay: 700;
+  --z-loader: 999;
+  --z-grain: 60;
+}
+
+// ---- Breakpoints (used by mixins) ----------------------------
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-laptop: 1080px;
+$bp-desktop: 1400px;

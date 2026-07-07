@@ -1,0 +1,26 @@
+html {
+  scrollbar-color: var(--color-cream-faint) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ink);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-cream-faint);
+  border-radius: 999px;
+
+  &:hover {
+    background: var(--color-accent-soft);
+  }
+}
+
+.lenis {
+  height: auto;
+}

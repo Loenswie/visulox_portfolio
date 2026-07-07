@@ -1,0 +1,30 @@
+{
+  "name": "visulox",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "VISULOX — the creative identity of Louis Lefebure. A cinematic portfolio built with Vue 3, TypeScript, GSAP and Lenis.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:skip-check": "vite build",
+    "preview": "vite preview",
+    "lint": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.13",
+    "pinia": "^2.2.2",
+    "split-type": "^0.3.4",
+    "vue": "^3.4.31",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "sass": "^1.77.8",
+    "typescript": "~5.4.5",
+    "vite": "^5.3.1",
+    "vue-tsc": "^2.0.22"
+  }
+}

@@ -1,0 +1,74 @@
+@use 'mixins' as m;
+
+// Custom cursor — replaces the native pointer on fine-pointer devices only.
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--cursor-size);
+  height: var(--cursor-size);
+  background: var(--color-cream);
+  pointer-events: none;
+  z-index: var(--z-cursor);
+  will-change: transform;
+  mix-blend-mode: difference;
+  transition: width 0.4s var(--ease-premium), height 0.4s var(--ease-premium),
+    background-color 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium);
+  display: none;
+
+  @include m.fine-pointer-only {
+    display: block;
+  }
+
+  &__label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // counter-rotate: the cursor itself sits at 45deg (diamond), the label
+    // text should stay upright and legible
+    transform: rotate(-45deg);
+    font-family: var(--font-body);
+    font-size: var(--fs-micro);
+    font-weight: 700;
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    color: var(--color-ink);
+    opacity: 0;
+    white-space: nowrap;
+    transition: opacity 0.3s var(--ease-premium);
+  }
+
+  // "hover" (plain magnetic buttons) and "view"/"drag" (buttons and project
+  // cards that also show a label) all get the same enlarged diamond — only
+  // the label's opacity differs between them.
+  &--hover,
+  &--view,
+  &--drag {
+    width: 64px;
+    height: 64px;
+    background: var(--color-cream);
+  }
+
+  &--view .custom-cursor__label,
+  &--drag .custom-cursor__label {
+    opacity: 1;
+  }
+
+  &--accent {
+    background: var(--color-accent);
+  }
+}
+
+html:has(.custom-cursor) {
+  @include m.fine-pointer-only {
+    cursor: none;
+
+    a,
+    button,
+    [role='button'] {
+      cursor: none;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+<script setup lang="ts">
+import { useHead } from '@/composables/useHead'
+import Hero from '@/components/home/Hero.vue'
+import StatsStrip from '@/components/home/StatsStrip.vue'
+import Pillars from '@/components/home/Pillars.vue'
+import WorkPreview from '@/components/home/WorkPreview.vue'
+import Finale from '@/components/home/Finale.vue'
+
+useHead(() => ({
+  title: 'VISULOX | Louis Lefebure, Creative Developer & Graphic Designer',
+  description:
+    'VISULOX is the creative identity of Louis Lefebure, a multidisciplinary creative working across branding, digital experiences and creative development. The art of creating your vision.',
+  image: '/Profielfoto_Grungy.jpg'
+}))
+</script>
+
+<template>
+  <div class="home-page">
+    <Hero />
+    <StatsStrip />
+    <Pillars />
+    <WorkPreview />
+    <Finale />
+  </div>
+</template>
