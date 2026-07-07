@@ -106,7 +106,12 @@ function toggleMobileMenu() {
     </div>
 
     <Transition name="mobile-menu">
-      <div v-if="ui.isMenuOpen" class="navbar__mobile" id="mobile-menu">
+      <div
+        v-if="ui.isMenuOpen"
+        class="navbar__mobile"
+        id="mobile-menu"
+        @click.self="ui.toggleMenu(false)"
+      >
         <button class="navbar__mobile-link" @click="goHome">Home</button>
         <button class="navbar__mobile-link" @click="goWork">Work</button>
         <button class="navbar__mobile-link" @click="goAbout">About</button>
@@ -198,12 +203,12 @@ function toggleMobileMenu() {
     position: relative;
     overflow: hidden;
     font-family: var(--font-body);
-    font-size: var(--fs-small);
+    font-size: 0.875rem;
     font-weight: 600;
     letter-spacing: var(--tracking-wide);
     text-transform: uppercase;
     color: var(--color-cream-dim);
-    padding: 7px 14px;
+    padding: 5px 9px;
     transition: color 0.35s var(--ease-premium);
 
     span {
@@ -275,13 +280,16 @@ function toggleMobileMenu() {
       display: flex;
     }
     position: fixed;
-    inset: var(--nav-height) 0 0 0;
+    width: 100%;
+    z-index: 1;
+    transform: translateZ(0);
     background: var(--color-ink);
     flex-direction: column;
     justify-content: center;
     gap: var(--space-3);
-    padding: var(--space-4) var(--gutter);
+    padding: var(--space-5) var(--gutter);
   }
+  
 
   &__mobile-link {
     font-family: var(--font-display);
@@ -290,6 +298,11 @@ function toggleMobileMenu() {
     text-align: left;
     color: var(--color-cream);
     text-transform: uppercase;
+  }
+
+  &__mobile-link:active {
+    background-color: var(--color-cream);
+    color: var(--color-ink);
   }
 
   &__mobile-quote {

@@ -68,7 +68,20 @@ if (!project.value) {
           </div>
         </div>
       </div>
-      <p class="project-detail__body">{{ project.longDescription }}</p>
+      <div class="project-detail__narrative">
+        <div class="project-detail__narrative-item">
+          <p class="type-eyebrow">01 — Challenge</p>
+          <p>{{ project.challenge }}</p>
+        </div>
+        <div class="project-detail__narrative-item">
+          <p class="type-eyebrow">02 — Approach</p>
+          <p>{{ project.approach }}</p>
+        </div>
+        <div class="project-detail__narrative-item">
+          <p class="type-eyebrow">03 — Result</p>
+          <p>{{ project.result }}</p>
+        </div>
+      </div>
 
       <div class="project-detail__links">
         <MagneticButton v-if="project.externalLink" label="Visit live site" :href="project.externalLink" />
@@ -175,11 +188,35 @@ if (!project.value) {
     margin-top: var(--space-2);
   }
 
-  &__body {
+  // Replaces what used to be a single long-form paragraph. Three equal
+  // columns at desktop (each a self-contained beat: Challenge / Approach /
+  // Result), stacked with hairline-separated rows once there's no room to
+  // read three columns side by side.
+  &__narrative {
     margin-top: var(--space-6);
-    max-width: 72ch;
-    font-size: var(--fs-body-lg);
-    color: var(--color-cream-dim);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+    padding-top: var(--space-5);
+    @include m.hairline(top);
+
+    @include m.tablet {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+
+  &__narrative-item {
+    max-width: 42ch;
+
+    .type-eyebrow {
+      margin-bottom: var(--space-2);
+    }
+
+    p:not(.type-eyebrow) {
+      font-size: var(--fs-body-lg);
+      color: var(--color-cream-dim);
+    }
   }
 
   &__links {

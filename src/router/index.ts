@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useCustomCursor } from '@/composables/useCustomCursor'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,16 @@ const router = createRouter({
       component: () => import('@/pages/NotFoundPage.vue')
     }
   ]
+})
+
+// Clicking a `router-link` (e.g. a ProjectCard set to the 'view' cursor on
+// hover) navigates immediately — the element can unmount before the browser
+// ever fires `mouseleave` on it, so the cursor's reset() call never runs and
+// it gets stuck enlarged/labelled on the page you land on. Resetting on every
+// navigation is a single, reliable backstop regardless of which component
+// (or which future one) set the cursor state.
+router.afterEach(() => {
+  useCustomCursor().reset()
 })
 
 export default router

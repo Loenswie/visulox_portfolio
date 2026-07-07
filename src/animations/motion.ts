@@ -5,6 +5,8 @@
  * scattered across components.
  */
 
+import { reducedMotionOverride } from '@/composables/useMotionPreference'
+
 export const EASE = {
   premium: 'expo.out',
   soft: 'power3.inOut',
@@ -33,6 +35,9 @@ export const SCROLL_DEFAULTS = {
   toggleActions: 'play none none reverse'
 } as const
 
+// Respects the OS-level setting first, then layers the user's own in-app
+// toggle on top (see useMotionPreference) — the toggle can only add
+// reduction, never switch it off against an OS accessibility preference.
 export const prefersReducedMotion = (): boolean =>
-  typeof window !== 'undefined' &&
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  reducedMotionOverride.value ||
+  (typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)

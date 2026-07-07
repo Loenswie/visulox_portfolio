@@ -2,6 +2,7 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLenis } from '@/composables/useLenis'
+import MotionToggle from '@/components/ui/MotionToggle.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -98,13 +99,16 @@ function goContact() {
 
     <div class="container footer__bottom">
       <p class="footer__clock">
-        <span class="footer__clock-line">Zedelgem · {{ clockTime }}</span>
+        <span class="footer__clock-line">Zedelgem  ·  {{ clockTime }}</span>
         <span class="footer__clock-line footer__clock-line--dim">{{ clockDate }}</span>
       </p>
 
       <button class="footer__top" v-magnetic="0.3" @click="backToTop">Back to top ↑</button>
 
-      <p class="footer__copy">© {{ year }} VISULOX — Louis Lefebure. All rights reserved.</p>
+      <div class="footer__meta">
+        <MotionToggle />
+        <p class="footer__copy">© {{ year }} VISULOX. All rights reserved.</p>
+      </div>
     </div>
   </footer>
 </template>
@@ -269,6 +273,18 @@ function goContact() {
     color: var(--color-cream);
     border-bottom: 1px solid var(--color-border-strong);
     padding-bottom: 2px;
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+
+    @include m.mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-2);
+    }
   }
 
   &__copy {

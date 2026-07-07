@@ -16,7 +16,9 @@ export interface Project {
   heroImage: string
   galleryImages: string[]
   shortDescription: string
-  longDescription: string
+  challenge: string
+  approach: string
+  result: string
   services: string[]
   technologies: string[]
   featured: boolean

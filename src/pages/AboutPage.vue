@@ -69,7 +69,7 @@ onMounted(() => {
     <section class="about-page__intro section container">
       <div ref="introEl" class="about-page__grid">
         <figure class="about-page__portrait">
-          <img src="/Profielfoto_Grungy.jpg" alt="Portrait of Louis Lefebure" loading="eager" fetchpriority="high" />
+          <img src="/Profielfoto_Normal.jpg" alt="Portrait of Louis Lefebure" loading="eager" fetchpriority="high" />
         </figure>
 
         <div class="about-page__copy">
