@@ -51,8 +51,8 @@ const timeline = [
 ]
 
 const tools = [
-  'Figma', 'Illustrator', 'Photoshop', 'After Effects',
-  'Vue 3', 'TypeScript', 'GSAP', 'Three.js', 'Node.js', 'Blender'
+  'Figma', 'InDesign', 'Illustrator', 'Photoshop', 'After Effects', 'Premiere Pro', 
+  'Vue 3', 'TypeScript', 'GSAP', 'React', 'Angular'
 ]
 
 function close() {

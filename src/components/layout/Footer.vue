@@ -1,42 +1,110 @@
 <script setup lang="ts">
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useLenis } from '@/composables/useLenis'
-import SocialIcon from '@/components/ui/SocialIcon.vue'
 
+const route = useRoute()
+const router = useRouter()
 const lenis = useLenis()
 const year = new Date().getFullYear()
 
 const socials = [
-  { label: 'Behance', icon: 'behance' as const, href: 'https://behance.net/visulox' },
-  { label: 'Instagram', icon: 'instagram' as const, href: 'https://instagram.com/visulox' },
-  { label: 'LinkedIn', icon: 'linkedin' as const, href: 'https://www.linkedin.com/in/louis-lefebure-057a33280/' }
+  { label: 'Behance', href: 'https://behance.net/visulox' },
+  { label: 'Instagram', href: 'https://instagram.com/visulox' },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/louis-lefebure-057a33280/' }
 ]
+
+// Live clock — Zedelgem sits in the Europe/Brussels zone, so letting Intl
+// resolve the offset (rather than hardcoding +1/+2) means it stays correct
+// across the DST switch automatically. A 1s interval formatting a short
+// string is negligible cost, nothing like the per-frame animation work
+// elsewhere on the site.
+const clockTime = ref('')
+const clockDate = ref('')
+let clockInterval: ReturnType<typeof setInterval> | undefined
+
+function updateClock() {
+  const now = new Date()
+  clockTime.value = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Brussels',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  }).format(now)
+
+  clockDate.value = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Europe/Brussels',
+    weekday: 'long',
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    timeZoneName: 'shortOffset'
+  }).format(now)
+}
+
+onMounted(() => {
+  updateClock()
+  clockInterval = setInterval(updateClock, 1000)
+})
+
+onBeforeUnmount(() => {
+  if (clockInterval) clearInterval(clockInterval)
+})
 
 function backToTop() {
   lenis.scrollTo(0)
+}
+
+function goHome() {
+  if (route.path !== '/') router.push('/')
+  else lenis.scrollTo(0)
+}
+
+function goWork() {
+  router.push('/work')
+}
+
+function goAbout() {
+  router.push('/about')
+}
+
+function goContact() {
+  if (route.path !== '/') router.push('/#finale')
+  else lenis.scrollTo('#finale')
 }
 </script>
 
 <template>
   <footer class="footer">
-    <div class="container footer__inner">
-      <div class="footer__brand">
-        <p class="footer__wordmark">VISULOX</p>
-        <p class="footer__quote">The art of creating your vision.</p>
-      </div>
+    <div class="container footer__main">
+      <nav class="footer__nav" aria-label="Footer navigation">
+        <p class="type-eyebrow footer__eyebrow">Navigation</p>
+        <button class="footer__nav-link" @click="goHome">Home</button>
+        <button class="footer__nav-link" @click="goWork">Work</button>
+        <button class="footer__nav-link" @click="goAbout">About</button>
+        <button class="footer__nav-link" @click="goContact">Contact</button>
+      </nav>
 
-      <ul class="footer__socials" aria-label="Social links">
-        <li v-for="s in socials" :key="s.label">
-          <a :href="s.href" target="_blank" rel="noopener noreferrer" v-magnetic="0.3">
-            <SocialIcon :name="s.icon" />
-            <span>{{ s.label }}</span>
-          </a>
-        </li>
-      </ul>
-
-      <div class="footer__meta">
-        <button class="footer__top" v-magnetic="0.3" @click="backToTop">Back to top ↑</button>
-        <p class="footer__copy">© {{ year }} Louis Lefebure.</p>
+      <div class="footer__socials-col">
+        <p class="type-eyebrow footer__eyebrow">Socials</p>
+        <ul class="footer__socials" aria-label="Social links">
+          <li v-for="s in socials" :key="s.label">
+            <a :href="s.href" target="_blank" rel="noopener noreferrer" v-magnetic="0.3">{{ s.label }} ↗</a>
+          </li>
+        </ul>
       </div>
+    </div>
+
+    <div class="container footer__bottom">
+      <p class="footer__clock">
+        <span class="footer__clock-line">Zedelgem · {{ clockTime }}</span>
+        <span class="footer__clock-line footer__clock-line--dim">{{ clockDate }}</span>
+      </p>
+
+      <button class="footer__top" v-magnetic="0.3" @click="backToTop">Back to top ↑</button>
+
+      <p class="footer__copy">© {{ year }} VISULOX — Louis Lefebure. All rights reserved.</p>
     </div>
   </footer>
 </template>
@@ -45,69 +113,155 @@ function backToTop() {
 @use '@/styles/mixins' as m;
 
 .footer {
+  position: relative;
   border-top: 1px solid var(--color-border);
-  padding-block: var(--space-6) var(--space-4);
+  background: var(--color-ink);
+  display: flex;
+  flex-direction: column;
+  // Same bottom-anchored composition as the hero: a tall section with its
+  // two content blocks pushed to the top and bottom edges respectively,
+  // rather than centered with generous margins everywhere.
+  justify-content: space-between;
+  // Was missing entirely (should have matched the hero's full-viewport
+  // treatment from the start) — restoring it here.
+  min-height: 100svh;
+  padding-top: var(--space-7);
+  padding-bottom: var(--space-4);
 
-  &__inner {
-    display: grid;
-    grid-template-columns: 1.4fr 1fr 1fr;
-    gap: var(--space-4);
+  // A full-viewport-tall footer reads as intentional and cinematic on
+  // larger screens, but forces mobile visitors to scroll through a mostly
+  // empty screen just to reach the copyright line — so it collapses back
+  // to a normal, content-height footer below the tablet breakpoint.
+  @include m.tablet {
+    min-height: 0;
+    padding-top: var(--space-6);
+  }
+
+  // Flex instead of grid(1fr auto) — the grid's first "1fr" track forced
+  // the nav column to stretch to fill all remaining width regardless of
+  // its own content, which is what was throwing off the gap to the socials
+  // column. Flex + space-between sizes both blocks to their own content and
+  // distributes the leftover space between them instead.
+  &__main {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: var(--space-6);
 
     @include m.tablet {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
+      flex-direction: column;
+      gap: var(--space-5);
     }
   }
 
-  &__wordmark {
-    font-family: var(--font-display);
-    font-size: clamp(1.8rem, 4vw, 2.6rem);
-    letter-spacing: var(--tracking-tighter);
+  &__eyebrow {
+    margin-bottom: var(--space-3);
   }
 
-  &__quote {
-    margin-top: var(--space-2);
-    font-size: var(--fs-small);
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  // Scaled way up from the original 2rem/5.5vw/3.75rem per feedback ("4x as
+  // big"). A literal 4x on every number (8rem/22vw/15rem) would hit ~240px
+  // at common desktop widths — wide enough that a single word like
+  // "Contact" would overflow the container well before the vw slope even
+  // caps out, reintroducing the exact overflow/wrap problem just fixed on
+  // the hero wordmark. This keeps the same much-larger spirit (the floor
+  // alone is already bigger than the old ceiling) with a slope/ceiling
+  // tuned to stay inside the container at realistic viewport widths.
+  &__nav-link {
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 9vw, 9rem);
+    line-height: 0.95;
+    letter-spacing: var(--tracking-tight);
+    text-transform: uppercase;
+    font-weight: 700;
     color: var(--color-cream-dim);
-    font-style: italic;
-    max-width: 28ch;
+    transition: color 0.35s var(--ease-premium);
+    padding: 0;
+
+    @include m.tablet {
+      font-size: clamp(3.5rem, 12vw, 6rem);
+    }
+
+    @include m.mobile {
+      font-size: clamp(2.2rem, 13vw, 3.6rem);
+    }
+
+    @include m.fine-pointer-only {
+      &:hover {
+        color: var(--color-cream);
+      }
+    }
+  }
+
+  &__socials-col {
+    align-self: start;
+
+    @include m.tablet {
+      align-self: auto;
+    }
   }
 
   &__socials {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    align-self: start;
 
     a {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-2);
       font-family: var(--font-body);
       font-size: var(--fs-body);
       font-weight: 600;
       color: var(--color-cream-dim);
       transition: color 0.3s var(--ease-premium);
 
-      .social-icon {
-        transition: transform 0.4s var(--ease-premium), color 0.3s var(--ease-premium);
-      }
-
       &:hover {
         color: var(--color-accent);
-
-        .social-icon {
-          transform: scale(1.15) rotate(-8deg);
-        }
       }
     }
   }
 
-  &__meta {
+  &__bottom {
+    margin-top: var(--space-6);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+
+    @include m.mobile {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-3);
+    }
+  }
+
+  &__clock {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-3);
+    gap: 2px;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--fs-small);
+    color: var(--color-cream);
+  }
+
+  &__clock-line {
+    // Tabular figures keep the seconds from jittering the line width every
+    // tick — a one-line CSS fix rather than reserving fixed pixel width.
+    font-variant-numeric: tabular-nums;
+
+    &--dim {
+      font-weight: 400;
+      color: var(--color-cream-faint);
+      font-size: var(--fs-micro);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+    }
   }
 
   &__top {
@@ -118,8 +272,9 @@ function backToTop() {
   }
 
   &__copy {
-    font-size: var(--fs-micro);
-    color: var(--color-cream-faint);
+    font-size: var(--fs-small);
+    font-weight: 600;
+    color: var(--color-cream-dim);
   }
 }
 </style>

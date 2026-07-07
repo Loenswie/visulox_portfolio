@@ -22,6 +22,39 @@ const heroReady = ref(false)
 let splitTitle: ReturnType<typeof kineticReveal> | null = null
 let scrollTween: ReturnType<typeof gsap.to> | null = null
 let bgParallax: ReturnType<typeof gsap.to> | null = null
+let resizeTimeout: ReturnType<typeof setTimeout> | undefined
+
+// The CSS clamp()/vw sizing is a best-effort guess at Unbounded's actual
+// glyph metrics — close, but not exact, and "the X gets clipped/wrapped at
+// some viewport width" is exactly what happens when that guess runs even
+// slightly hot. Rather than continuing to hand-tune vw coefficients blind,
+// measure the *actual* rendered width against the box's available width and
+// shrink the font-size just enough to guarantee it always fits, at any
+// viewport size, on any browser's font rendering — no more guessing.
+function fitWordmark() {
+  const el = titleEl.value
+  if (!el) return
+  // Clear any previous correction first so we re-measure against the CSS
+  // clamp's own fresh value for the *current* viewport, not a shrunk one
+  // left over from a narrower size.
+  el.style.fontSize = ''
+  // Below the mobile breakpoint the wordmark is rotated into a vertical
+  // sidebar (writing-mode: vertical-rl), so the axis text actually flows
+  // along — and can overflow along — is the vertical one, not horizontal.
+  const vertical = window.matchMedia('(max-width: 480px)').matches
+  const available = vertical ? el.clientHeight : el.clientWidth
+  const needed = vertical ? el.scrollHeight : el.scrollWidth
+  if (needed > available && available > 0) {
+    const current = parseFloat(getComputedStyle(el).fontSize)
+    // 0.97 safety margin so it never lands pixel-perfect on the edge.
+    el.style.fontSize = `${current * (available / needed) * 0.97}px`
+  }
+}
+
+function scheduleFitWordmark() {
+  if (resizeTimeout) clearTimeout(resizeTimeout)
+  resizeTimeout = setTimeout(fitWordmark, 120)
+}
 
 function startIntro() {
   if (!titleEl.value) return
@@ -40,6 +73,15 @@ function startIntro() {
 }
 
 onMounted(() => {
+  // Fit before the char-split reveal runs, so SplitType measures/positions
+  // its per-character spans against the final, corrected font-size rather
+  // than the raw CSS value. Runs once immediately (covers cached fonts) and
+  // again once the webfont has actually finished loading, since measuring
+  // against a fallback font's metrics would give the wrong answer.
+  fitWordmark()
+  document.fonts?.ready?.then(fitWordmark)
+  window.addEventListener('resize', scheduleFitWordmark, { passive: true })
+
   watch(
     () => ui.isLoading,
     (loading) => {
@@ -79,6 +121,8 @@ onBeforeUnmount(() => {
   scrollTween?.kill()
   ;(bgParallax as any)?.scrollTrigger?.kill()
   bgParallax?.kill()
+  window.removeEventListener('resize', scheduleFitWordmark)
+  if (resizeTimeout) clearTimeout(resizeTimeout)
 })
 </script>
 
@@ -160,12 +204,12 @@ onBeforeUnmount(() => {
       left: -15%;
       width: 70vw;
       height: 70vw;
+      // Static now — the drifting animation was removed for performance.
+      // Even though it was transform-only, two independently-animating
+      // full-viewport gradient layers is still two things the compositor
+      // has to keep re-evaluating every frame indefinitely; dropping this
+      // one removes that cost outright while keeping the violet glow itself.
       background: radial-gradient(closest-side, rgba(105, 61, 174, 0.22), transparent 72%);
-      // Bigger travel distance + a shorter cycle so the drift actually reads
-      // as movement (56s/6-8% was too subtle to notice). Still transform +
-      // scale only — neither amplitude nor duration affects per-frame cost,
-      // so this remains free from a performance standpoint.
-      animation: hero-blob-a 32s ease-in-out infinite alternate;
     }
 
     &--b {
@@ -197,6 +241,21 @@ onBeforeUnmount(() => {
   &__bottom {
     position: relative;
     z-index: 1;
+
+    // Mobile-only layout: instead of stacking the meta row above the
+    // wordmark, the wordmark becomes a rotated sidebar running the full
+    // height of the hero (navbar to bottom edge) with the eyebrow/CTA
+    // sitting to its right — see .hero__wordmark below for the rotation.
+    @include m.mobile {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-end;
+      // Grow to fill all the space .hero's justify-content: flex-end would
+      // otherwise leave above it, since the wordmark needs the full height
+      // to span navbar-to-bottom, not just its own content height.
+      flex: 1;
+      gap: var(--space-3);
+    }
   }
 
   // Shares the wordmark's own padding-inline (not the container gutter) so
@@ -213,7 +272,13 @@ onBeforeUnmount(() => {
     @include m.mobile {
       flex-direction: column;
       align-items: flex-start;
+      justify-content: flex-end;
       gap: var(--space-3);
+      // Takes the remaining width next to the rotated wordmark sidebar.
+      flex: 1;
+      margin-bottom: 0;
+      padding-inline: 0;
+      padding-right: var(--space-3);
     }
   }
 
@@ -226,6 +291,16 @@ onBeforeUnmount(() => {
     color: var(--color-cream);
     overflow: hidden;
     text-align: left;
+    // The kinetic reveal (kineticReveal/SplitType) splits "VISULOX" into one
+    // inline-block span per character so each letter can animate in on its
+    // own — but that also means the browser now treats the space between
+    // any two letters as a valid line-wrap point, same as it would between
+    // words. Without this, a slightly-too-large font-size at some viewport
+    // width doesn't just overflow — it wraps the last letter(s) onto a
+    // second line. `nowrap` removes that possibility outright; if the text
+    // is ever wider than the box regardless, the existing `overflow: hidden`
+    // clips the edge instead, which is a far less broken-looking failure mode.
+    white-space: nowrap;
 
     // Switch to the smaller/steeper clamp earlier (at the laptop breakpoint,
     // not just tablet) so iPad-sized viewports never end up with an
@@ -233,15 +308,27 @@ onBeforeUnmount(() => {
     @include m.laptop {
       font-size: clamp(3.4rem, 21vw, 12rem);
     }
-  }
-}
 
-@keyframes hero-blob-a {
-  from {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  to {
-    transform: translate3d(18%, 22%, 0) scale(1.25);
+    // Mobile only: instead of shrinking to fit on one horizontal line above
+    // the meta row, the wordmark rotates into a vertical sidebar running
+    // the full height of the hero, with the eyebrow/CTA sitting to its
+    // right (see .hero__bottom / .hero__meta above). `writing-mode:
+    // vertical-rl` — not a `transform: rotate()` — because it makes the
+    // browser's own layout engine treat the vertical axis as the text's
+    // flow direction, so `height` (not `width`) is what controls wrapping,
+    // and `order: -1` puts it before the meta block regardless of DOM order.
+    @include m.mobile {
+      order: -1;
+      writing-mode: vertical-rl;
+      align-self: stretch;
+      width: auto;
+      height: auto;
+      // Rough starting point — fitWordmark() (see script) measures the
+      // actual rendered height against the space available and corrects
+      // this, the same safety net used for the horizontal layout above.
+      font-size: clamp(2.5rem, 40vh, 6rem);
+      line-height: 0.9;
+    }
   }
 }
 

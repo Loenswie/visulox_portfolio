@@ -29,7 +29,12 @@ export function useLenis() {
     if (lenis) return lenis
 
     lenis = new Lenis({
-      duration: 1.15,
+      // Shorter catch-up window than before (1.15s -> 0.8s) — the scroll
+      // position settles into place noticeably quicker after each input,
+      // which means less sustained per-frame interpolation work trailing
+      // every scroll/wheel event. Still eased (not instant/native), just a
+      // lighter touch than before.
+      duration: 0.8,
       easing: (t: number) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
       wheelMultiplier: 1

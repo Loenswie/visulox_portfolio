@@ -51,7 +51,7 @@ onMounted(() => {
   }
 
   &__grid {
-    margin-top: var(--space-6);
+    margin-top: var(--space-4);
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-4);

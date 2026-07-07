@@ -102,7 +102,7 @@ onMounted(() => {
              four images never load over the network at all until hovered. -->
         <Transition name="pillars-preview">
           <div v-if="activeIndex === i" class="pillars__item-preview" aria-hidden="true">
-            <img :src="p.image" alt="" decoding="async" />
+            <img :src="p.image" alt="" loading="lazy" decoding="async" />
           </div>
         </Transition>
       </li>

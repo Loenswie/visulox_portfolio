@@ -1,3 +1,9 @@
+<!--
+  DEPRECATED: no longer used anywhere. Both places that rendered social
+  links (Finale.vue, Footer.vue) switched to plain text + a "↗" arrow
+  instead of an icon, per design feedback. Left in place only because files
+  can't be deleted in this environment.
+-->
 <script setup lang="ts">
 interface Props {
   name: 'behance' | 'instagram' | 'linkedin'

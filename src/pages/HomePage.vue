@@ -7,7 +7,7 @@ import WorkPreview from '@/components/home/WorkPreview.vue'
 import Finale from '@/components/home/Finale.vue'
 
 useHead(() => ({
-  title: 'VISULOX | Louis Lefebure, Creative Developer & Graphic Designer',
+  title: 'Home | VISULOX',
   description:
     'VISULOX is the creative identity of Louis Lefebure, a multidisciplinary creative working across branding, digital experiences and creative development. The art of creating your vision.',
   image: '/Profielfoto_Grungy.jpg'
@@ -17,9 +17,9 @@ useHead(() => ({
 <template>
   <div class="home-page">
     <Hero />
-    <StatsStrip />
     <Pillars />
     <WorkPreview />
+    <StatsStrip />
     <Finale />
   </div>
 </template>

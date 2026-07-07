@@ -60,11 +60,24 @@ h3,
   letter-spacing: 0;
 }
 
-// Kinetic split-type target elements — kept invisible until animated
-.split-line,
-.split-word,
-.split-char {
+// Kinetic split-type target elements — kept invisible until animated.
+// NOTE: SplitType's actual default class names are `.line` / `.word` /
+// `.char` (no "split-" prefix — that was targeting classes that don't
+// exist, so this rule was previously a no-op).
+.line,
+.word,
+.char {
   will-change: transform, opacity;
+  // Each character/word becomes its own `display: inline-block` span (set
+  // inline by SplitType itself) so it can be transformed independently for
+  // the reveal. Inline-blocks default to `vertical-align: baseline`, and
+  // without an explicit line-height on each tiny span that default baseline
+  // calculation is inconsistent from glyph to glyph — visually this is
+  // exactly "the characters all stand apart, with the k of Work sitting at
+  // a different level". Pinning every fragment to the same edge fixes it
+  // regardless of font/glyph metrics — a more reliable fix than adjusting
+  // letter-spacing, which doesn't affect vertical position at all.
+  vertical-align: top;
 }
 
 ::selection {
