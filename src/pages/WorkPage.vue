@@ -41,7 +41,12 @@ onMounted(() => {
     <header class="work-page__header section container">
       <p class="type-eyebrow">Archive · 2023 to 2025</p>
       <h1 class="type-display-lg work-page__title">
-        <SplitText text="Selected Work" as="span" by="chars" :scroll-trigger="false" />
+        <span class="work-page__title-word">
+          <SplitText text="Selected" as="span" by="chars" :scroll-trigger="false" />
+        </span>
+        <span class="work-page__title-word work-page__title-word--break">
+          <SplitText text="Work" as="span" by="chars" :scroll-trigger="false" :delay="0.48" />
+        </span>
       </h1>
 
       <nav class="work-page__filters" aria-label="Filter projects by category">
@@ -81,6 +86,25 @@ onMounted(() => {
 
   &__title {
     margin-top: var(--space-2);
+  }
+
+  // Split into two word-groups (instead of one "Selected Work" string) so the
+  // second word can be forced onto its own line on mobile — reliably, since
+  // these spans are real Vue-rendered elements, rather than depending on
+  // SplitType's own internal word/char DOM structure (which scoped styles
+  // can't safely reach into).
+  &__title-word {
+    display: inline-block;
+
+    &:first-child {
+      margin-right: 0.28em;
+    }
+  }
+
+  &__title-word--break {
+    @include m.mobile {
+      display: block;
+    }
   }
 
   &__filters {

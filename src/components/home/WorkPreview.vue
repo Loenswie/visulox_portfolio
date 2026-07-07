@@ -18,7 +18,7 @@ onMounted(() => {
 <template>
   <section class="work-preview section" aria-label="Selected work">
     <div class="container work-preview__head">
-      <SectionHeading eyebrow="Selected Work" title="Recent projects" />
+      <SectionHeading title="Recent projects" />
       <MagneticButton label="View all work" to="/work" />
     </div>
 

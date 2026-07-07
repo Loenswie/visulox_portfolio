@@ -98,13 +98,22 @@ git commit -m "Initial commit — VISULOX portfolio"
 
 ## Deployment
 
-Config files for both are included and pre-wired for SPA routing (`/work/:slug` deep links, etc.):
+Config files for all three are included and pre-wired for SPA routing (`/work/:slug` deep links, etc.):
 
 - **Vercel** — `vercel.json` (framework preset: Vite, build: `npm run build`, output: `dist`)
 - **Netlify** — `netlify.toml` (build: `npm run build`, publish: `dist`, SPA redirect to `index.html`)
+- **Render** — `render.yaml` (static site, build: `npm run build`, publish path: `dist`, SPA rewrite to
+  `index.html`). If a Render static site for this repo was created by hand in the dashboard *before*
+  this file existed, it won't automatically pick up `render.yaml` — double-check the service's
+  Settings tab still has **Build Command** `npm run build` and **Publish Directory** `dist`. If
+  Publish Directory is wrong (e.g. left at the repo root), Render serves the raw source instead of
+  the built app: the browser then requests `/src/main.ts` directly, which fails to load as a module
+  (some static servers even serve `.ts` as video MIME type `video/mp2t`, since `.ts` is also the
+  MPEG-TS video extension), and every asset that's normally copied out of `SOURCEFILES` into `dist/`
+  404s — the whole page renders blank/grey as a result.
 
-Either platform: connect the repo (or drag-and-drop the `dist/` folder for a one-off deploy),
-no environment variables are required.
+Any platform: connect the repo (or drag-and-drop the `dist/` folder for a one-off deploy), no
+environment variables are required.
 
 ## Performance & accessibility notes
 
