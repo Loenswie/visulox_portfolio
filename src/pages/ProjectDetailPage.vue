@@ -109,9 +109,17 @@ if (!project.value) {
     </section>
 
     <footer class="project-detail__nav container">
-      <router-link to="/work" class="project-detail__back">← Back to all work</router-link>
-      <router-link v-if="nextProject" :to="`/work/${nextProject.slug}`" class="project-detail__next">
-        Next project · {{ nextProject.title }} →
+      <router-link to="/work" class="project-detail__nav-btn project-detail__nav-btn--back">
+        <span class="project-detail__nav-arrow" aria-hidden="true">←</span>
+        <span>All Work</span>
+      </router-link>
+      <router-link
+        v-if="nextProject"
+        :to="`/work/${nextProject.slug}`"
+        class="project-detail__nav-btn project-detail__nav-btn--next"
+      >
+        <span>Next — {{ nextProject.title }}</span>
+        <span class="project-detail__nav-arrow" aria-hidden="true">→</span>
       </router-link>
     </footer>
   </article>
@@ -262,11 +270,6 @@ if (!project.value) {
     align-items: center;
     padding-block: var(--space-6);
     @include m.hairline(top);
-    font-family: var(--font-body);
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: var(--fs-small);
-    letter-spacing: var(--tracking-wide);
 
     @include m.tablet {
       flex-direction: column;
@@ -275,12 +278,33 @@ if (!project.value) {
     }
   }
 
-  &__back {
-    color: var(--color-cream-dim);
+  // Tight rectangle-behind-text chip rather than a plain text link — a solid
+  // cream plane hugging the label closely, flipping to the accent color on
+  // hover. Deliberately snugger padding than the homepage's MagneticButton
+  // (that one stays untouched); this is its own, tighter-fitting style.
+  &__nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    background: var(--color-cream);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--fs-small);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-wide);
+    padding: 8px 12px;
+    transition: background-color 0.3s var(--ease-premium), color 0.3s var(--ease-premium);
+
+    &:hover {
+      background: var(--color-accent);
+      color: var(--color-cream);
+    }
   }
 
-  &__next {
-    color: var(--color-cream);
+  &__nav-arrow {
+    font-size: 1.05em;
+    line-height: 1;
   }
 }
 </style>

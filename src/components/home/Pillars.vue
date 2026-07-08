@@ -86,12 +86,14 @@ onMounted(() => {
         <span class="pillars__index">{{ p.index }}</span>
         <div class="pillars__body">
           <h3 class="pillars__title">{{ p.title }}</h3>
-          <p class="pillars__summary">{{ p.summary }}</p>
           <div class="pillars__detail">
-            <p>{{ p.detail }}</p>
-            <ul class="pillars__tags">
-              <li v-for="tag in p.tags" :key="tag">{{ tag }}</li>
-            </ul>
+            <div class="pillars__detail-inner">
+              <p class="pillars__detail-lead">{{ p.summary }}</p>
+              <p>{{ p.detail }}</p>
+              <ul class="pillars__tags">
+                <li v-for="tag in p.tags" :key="tag">{{ tag }}</li>
+              </ul>
+            </div>
           </div>
         </div>
 
@@ -126,7 +128,11 @@ onMounted(() => {
     grid-template-columns: auto 1fr;
     align-items: baseline;
     column-gap: var(--space-4);
-    padding-block: var(--space-4);
+    // Tight, table-of-contents rhythm — rows sit right against each other
+    // rather than floating with generous space around them; the number +
+    // title alone (no permanently-visible summary line anymore) carry the
+    // section on their own size/weight.
+    padding-block: var(--space-2);
     @include m.hairline(top);
     transition: background-color 0.5s var(--ease-premium);
 
@@ -150,7 +156,7 @@ onMounted(() => {
 
     @include m.tablet {
       grid-template-columns: 1fr;
-      row-gap: var(--space-1);
+      row-gap: 0;
     }
   }
 
@@ -180,24 +186,36 @@ onMounted(() => {
     transition: color 0.5s var(--ease-premium);
   }
 
-  &__summary {
-    margin-top: var(--space-2);
-    max-width: 48ch;
-    color: var(--color-cream-dim);
-    font-size: var(--fs-body-lg);
-  }
-
   &__detail {
     display: grid;
     grid-template-rows: 0fr;
     opacity: 0;
     transition: grid-template-rows 0.5s var(--ease-premium), opacity 0.4s var(--ease-premium),
       margin-top 0.5s var(--ease-premium);
+  }
+
+  // The actual reason the gap wasn't closing: .pillars__detail had THREE
+  // direct children (lead, detail paragraph, tags list). Grid only collapses
+  // the ONE explicit 0fr row — anything past the first child falls into an
+  // auto-generated implicit row that ignores grid-template-rows entirely and
+  // keeps its natural height regardless of the 0fr/opacity state. Wrapping
+  // all three in a single child makes that child the sole grid item, so the
+  // whole block now genuinely collapses to zero instead of just fading out
+  // while still occupying its full layout height.
+  &__detail-inner {
+    overflow: hidden;
+    min-height: 0;
 
     > p {
       overflow: hidden;
       max-width: 56ch;
       color: var(--color-cream-faint);
+
+      &.pillars__detail-lead {
+        color: var(--color-cream-dim);
+        font-size: var(--fs-body-lg);
+        margin-bottom: var(--space-1);
+      }
     }
   }
 

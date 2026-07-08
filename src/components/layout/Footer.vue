@@ -3,6 +3,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useLenis } from '@/composables/useLenis'
 import MotionToggle from '@/components/ui/MotionToggle.vue'
+import SoundToggle from '@/components/ui/SoundToggle.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -106,6 +107,7 @@ function goContact() {
       <button class="footer__top" v-magnetic="0.3" @click="backToTop">Back to top ↑</button>
 
       <div class="footer__meta">
+        <SoundToggle />
         <MotionToggle />
         <p class="footer__copy">© {{ year }} VISULOX. All rights reserved.</p>
       </div>

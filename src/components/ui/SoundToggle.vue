@@ -1,8 +1,3 @@
-<!--
-  DEPRECATED / UNUSED: the sound toggle was removed from the navbar per
-  feedback. Kept in place rather than deleted. Safe to remove later, along
-  with src/composables/useSound.ts.
--->
 <script setup lang="ts">
 import { useSound } from '@/composables/useSound'
 
@@ -15,11 +10,15 @@ const { enabled, toggle } = useSound()
     :class="{ 'is-on': enabled }"
     :aria-pressed="enabled"
     aria-label="Toggle ambient sound"
+    title="Toggle ambient sound"
     @click="toggle"
   >
-    <span class="sound-toggle__bar" />
-    <span class="sound-toggle__bar" />
-    <span class="sound-toggle__bar" />
+    <span class="sound-toggle__bars" aria-hidden="true">
+      <span class="sound-toggle__bar" />
+      <span class="sound-toggle__bar" />
+      <span class="sound-toggle__bar" />
+    </span>
+    <span>{{ enabled ? 'Sound on' : 'Sound off' }}</span>
   </button>
 </template>
 
@@ -27,16 +26,32 @@ const { enabled, toggle } = useSound()
 .sound-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 3px;
-  width: 22px;
-  height: 16px;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--fs-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-cream-dim);
+  transition: color 0.3s var(--ease-premium);
+
+  &:hover {
+    color: var(--color-cream);
+  }
+
+  &__bars {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    width: 16px;
+    height: 12px;
+  }
 
   &__bar {
     display: inline-block;
     width: 3px;
     height: 40%;
     background: var(--color-cream-faint);
-    border-radius: 2px;
     transition: height 0.3s var(--ease-premium), background-color 0.3s var(--ease-premium);
   }
 

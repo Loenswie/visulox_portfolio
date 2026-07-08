@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useHead } from '@/composables/useHead'
-import { fadeUpOnScroll, staggerUpOnScroll } from '@/animations/reveal'
+import { fadeUpOnScroll, gsap, ScrollTrigger, staggerUpOnScroll } from '@/animations/reveal'
+import { prefersReducedMotion } from '@/animations/motion'
 
 useHead(() => ({
   title: 'About | VISULOX',
@@ -37,58 +38,136 @@ const disciplines = [
   }
 ]
 
-const timeline = [
-  { year: '2018', label: 'First lines of code, first design tools, self-taught, in parallel.' },
-  { year: '2020', label: 'Started freelancing across branding and small web projects.' },
-  { year: '2022', label: 'Began formal software engineering studies.' },
-  { year: '2024', label: 'VISULOX becomes a full creative practice, not just a name.' },
-  { year: 'Now', label: 'Building cinematic, hybrid design/development work for select clients.' }
+// Kept general on purpose — real degree/role shape, without naming specific
+// schools or employers, which reads better on a portfolio than a literal CV.
+const education = [
+  { year: '2015 – 2021', label: 'Secondary education, economics & modern languages — graduated with distinction.' },
+  { year: '2021 – 2024', label: "Bachelor's degree in Applied Computer Science — graduated with great distinction." },
+  { year: '2024 – 2026', label: 'Graduate program in Graphic Design, online & offline — currently completing.' }
+]
+
+const experience = [
+  { year: '2021 – 2026', label: 'Cinema crew member — customer-facing, organized, fast-paced environment.' },
+  { year: '2024', label: 'Software engineering internship — websites, flyers and event invitations.' },
+  { year: '2024 – 2026', label: 'Freelance graphic design — branding, flyers and photography for small clients.' },
+  { year: '2026', label: 'Graphic design internship — campaigns, branding and website work.' }
 ]
 
 const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Vue 3', 'TypeScript', 'GSAP', 'Three.js', 'Node.js', 'Blender']
 
 const disciplineListEl = ref<HTMLElement | null>(null)
-const timelineEl = ref<HTMLElement | null>(null)
+const educationEl = ref<HTMLElement | null>(null)
+const experienceEl = ref<HTMLElement | null>(null)
 const toolsEl = ref<HTMLElement | null>(null)
 const introEl = ref<HTMLElement | null>(null)
+
+const heroEl = ref<HTMLElement | null>(null)
+const heroBackWordEl = ref<HTMLElement | null>(null)
+const heroFrontWordEl = ref<HTMLElement | null>(null)
+// Typed loosely (like Hero.vue's own scrollTween) — the ScrollTrigger
+// instance is attached to the timeline at runtime by the plugin, and isn't
+// part of GSAP's own Timeline type declarations.
+let heroScrollTrigger: ReturnType<typeof ScrollTrigger.create> | null = null
+let heroSetupTimeout: ReturnType<typeof setTimeout> | undefined
 
 onMounted(() => {
   if (introEl.value) fadeUpOnScroll(introEl.value, { y: 32 })
   if (disciplineListEl.value) {
     staggerUpOnScroll(disciplineListEl.value.querySelectorAll('li'), disciplineListEl.value, { y: 28, stagger: 0.06 })
   }
-  if (timelineEl.value) {
-    staggerUpOnScroll(timelineEl.value.querySelectorAll('li'), timelineEl.value, { y: 20, stagger: 0.05 })
+  if (educationEl.value) {
+    staggerUpOnScroll(educationEl.value.querySelectorAll('li'), educationEl.value, { y: 20, stagger: 0.05 })
+  }
+  if (experienceEl.value) {
+    staggerUpOnScroll(experienceEl.value.querySelectorAll('li'), experienceEl.value, { y: 20, stagger: 0.05 })
   }
   if (toolsEl.value) fadeUpOnScroll(toolsEl.value, { y: 20 })
+
+  // The photo never moves — it's pinned dead center for the whole section.
+  // The two words arrive one at a time, not simultaneously, so they never
+  // occupy the same space mid-scroll: "Software Engineer" (behind the photo)
+  // slides in from the left and settles upper-left during the first half of
+  // the scroll; only once it's fully in place does "Graphic Designer" (in
+  // front of the photo) slide in from the right and settle lower-right,
+  // during the second half. Same rest positions as the CSS defaults below,
+  // so reduced-motion visitors see the identical final layout, just without
+  // the scroll-driven approach.
+  //
+  // Delayed on purpose: this component mounts while DefaultLayout's own
+  // page-enter transition (0.7s) is still animating the whole page's y/
+  // opacity. Creating a `pin: true` ScrollTrigger while an ancestor is
+  // mid-transform gives it a wrong initial measurement — the pin ends up
+  // useless (the section just scrolls normally instead of holding in
+  // place). Waiting until that transition has actually finished, then
+  // creating it fresh, is what makes the pin behave correctly.
+  heroSetupTimeout = setTimeout(() => {
+    if (!prefersReducedMotion() && heroEl.value && heroBackWordEl.value && heroFrontWordEl.value) {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: heroEl.value,
+          start: 'top top',
+          end: '+=140%',
+          scrub: 0.6,
+          pin: true
+        }
+      })
+      tl.fromTo(
+        heroBackWordEl.value,
+        { xPercent: -260, yPercent: -85 },
+        { xPercent: -68, yPercent: -85, ease: 'none', duration: 0.5 },
+        0
+      ).fromTo(
+        heroFrontWordEl.value,
+        { xPercent: 260, yPercent: -12 },
+        { xPercent: 68, yPercent: -12, ease: 'none', duration: 0.5 },
+        0.5
+      )
+      heroScrollTrigger = (tl as any).scrollTrigger ?? null
+    }
+    ScrollTrigger.refresh()
+  }, 800)
+})
+
+onBeforeUnmount(() => {
+  if (heroSetupTimeout) clearTimeout(heroSetupTimeout)
+  heroScrollTrigger?.kill()
 })
 </script>
 
 <template>
   <div class="about-page">
-    <section class="about-page__intro section container">
-      <div ref="introEl" class="about-page__grid">
-        <figure class="about-page__portrait">
+    <section ref="heroEl" class="about-hero" aria-label="Louis Lefebure">
+      <h1 class="sr-only">Software Engineer / Graphic Designer — Louis Lefebure</h1>
+      <div class="about-hero__stage">
+        <span ref="heroBackWordEl" class="about-hero__word about-hero__word--back" aria-hidden="true">
+          Software<br />Engineer
+        </span>
+        <figure class="about-hero__photo">
           <img src="/Profielfoto_Normal.jpg" alt="Portrait of Louis Lefebure" loading="eager" fetchpriority="high" />
         </figure>
+        <span ref="heroFrontWordEl" class="about-hero__word about-hero__word--front" aria-hidden="true">
+          Graphic<br />Designer
+        </span>
+      </div>
+      <p class="type-eyebrow about-hero__scroll-cue">Scroll</p>
+    </section>
 
-        <div class="about-page__copy">
-          <p class="type-eyebrow">About Louis Lefebure</p>
-          <h1 class="type-display-lg about-page__title">Software engineer /<br />Graphic designer</h1>
-          <p class="type-body-lg about-page__lede">
-            VISULOX is what happens when a designer refuses to stop coding, and an engineer refuses
-            to stop looking at type foundries at 2am. I'm a multidisciplinary creative who builds
-            the visual system and the software that carries it, in the same breath.
-          </p>
-          <p class="about-page__body">
-            Most studios split the two: someone designs, someone else implements, and the idea
-            erodes a little at every handoff. I work the seam between them on purpose. A brand
-            system I build gets stress-tested in a real browser before it's called finished; a
-            piece of software I ship was drawn, gridded and typeset before a single component
-            existed. That's the whole philosophy behind "the art of creating your vision": vision
-            isn't a mood board, it's a thing you actually build.
-          </p>
-        </div>
+    <section class="about-page__intro section container">
+      <div ref="introEl" class="about-page__copy">
+        <p class="type-eyebrow">About Louis Lefebure</p>
+        <p class="type-body-lg about-page__lede">
+          VISULOX is what happens when a designer refuses to stop coding, and an engineer refuses
+          to stop looking at type foundries at 2am. I'm a multidisciplinary creative who builds
+          the visual system and the software that carries it, in the same breath.
+        </p>
+        <p class="about-page__body">
+          Most studios split the two: someone designs, someone else implements, and the idea
+          erodes a little at every handoff. I work the seam between them on purpose. A brand
+          system I build gets stress-tested in a real browser before it's called finished; a
+          piece of software I ship was drawn, gridded and typeset before a single component
+          existed. That's the whole philosophy behind "the art of creating your vision": vision
+          isn't a mood board, it's a thing you actually build.
+        </p>
       </div>
     </section>
 
@@ -104,12 +183,22 @@ onMounted(() => {
       </ul>
     </section>
 
-    <section class="about-page__timeline section container">
-      <p class="type-eyebrow">Timeline</p>
-      <ol ref="timelineEl">
-        <li v-for="t in timeline" :key="t.year">
-          <span class="about-page__timeline-year">{{ t.year }}</span>
-          <span class="about-page__timeline-label">{{ t.label }}</span>
+    <section class="about-page__education section container">
+      <p class="type-eyebrow">Education</p>
+      <ol ref="educationEl" class="about-page__record-list">
+        <li v-for="e in education" :key="e.year">
+          <span class="about-page__record-year">{{ e.year }}</span>
+          <span class="about-page__record-label">{{ e.label }}</span>
+        </li>
+      </ol>
+    </section>
+
+    <section class="about-page__experience section container">
+      <p class="type-eyebrow">Experience</p>
+      <ol ref="experienceEl" class="about-page__record-list">
+        <li v-for="e in experience" :key="e.year + e.label">
+          <span class="about-page__record-year">{{ e.year }}</span>
+          <span class="about-page__record-label">{{ e.label }}</span>
         </li>
       </ol>
     </section>
@@ -126,37 +215,89 @@ onMounted(() => {
 <style lang="scss" scoped>
 @use '@/styles/mixins' as m;
 
-.about-page {
-  padding-top: var(--nav-height);
+.about-hero {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--color-ink);
 
-  &__grid {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: var(--space-6);
-    align-items: end;
+  &__stage {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-    // Portrait + long-form text side by side needs real width to breathe,
-    // so this stacks a breakpoint earlier than most 2-column layouts,
-    // covering iPad portrait as well as phones.
-    @include m.laptop {
-      grid-template-columns: 1fr;
-      gap: var(--space-4);
+  // Square portrait, dead center, sits between the two text layers.
+  &__photo {
+    position: relative;
+    z-index: 1;
+    width: min(34vw, 420px);
+    aspect-ratio: 1 / 1;
+    flex-shrink: 0;
+
+    @include m.tablet {
+      width: min(60vw, 320px);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
     }
   }
 
-  &__portrait img {
-    width: 100%;
-    aspect-ratio: 4 / 5;
-    object-fit: cover;
-    filter: grayscale(1) contrast(1.05);
+  // Diagonal rest layout by default — "Software Engineer" upper-left behind
+  // the photo, "Graphic Designer" lower-right in front of it — matching
+  // exactly where the GSAP scroll animation (see script) settles each word,
+  // so reduced-motion visitors (who never get that tween) still see the
+  // intended final composition, not an overlapping mess in the center.
+  &__word {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    transform: translate(calc(-50% - 68%), -85%);
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 6.4vw, 5.5rem);
+    line-height: 0.92;
+    letter-spacing: var(--tracking-tight);
+    font-weight: 700;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--color-cream);
+
+    &--front {
+      z-index: 2;
+      transform: translate(calc(-50% + 68%), -12%);
+    }
   }
 
-  &__title {
-    margin-top: var(--space-3);
+  &__scroll-cue {
+    position: absolute;
+    bottom: var(--space-4);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: var(--color-cream-faint);
+  }
+}
+
+.about-page {
+  &__copy {
+    max-width: 68ch;
   }
 
   &__lede {
-    margin-top: var(--space-4);
+    margin-top: var(--space-3);
   }
 
   &__body {
@@ -166,7 +307,8 @@ onMounted(() => {
   }
 
   &__disciplines,
-  &__timeline,
+  &__education,
+  &__experience,
   &__tools {
     @include m.hairline(top);
   }
@@ -192,26 +334,25 @@ onMounted(() => {
     }
   }
 
-  &__timeline {
-    ol {
-      margin-top: var(--space-5);
-    }
+  &__record-list {
+    margin-top: var(--space-5);
 
     li {
       display: flex;
       gap: var(--space-4);
       padding-block: var(--space-2);
+      @include m.hairline(bottom);
     }
   }
 
-  &__timeline-year {
+  &__record-year {
     font-family: var(--font-display);
-    width: 5ch;
+    width: 9ch;
     flex-shrink: 0;
     color: var(--color-accent);
   }
 
-  &__timeline-label {
+  &__record-label {
     color: var(--color-cream-dim);
   }
 

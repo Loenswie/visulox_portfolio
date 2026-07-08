@@ -68,7 +68,7 @@ function toggleMobileMenu() {
 </script>
 
 <template>
-  <header class="navbar" :class="{ 'navbar--scrolled': isScrolled || ui.isMenuOpen }">
+  <header class="navbar" :class="{ 'navbar--scrolled': isScrolled, 'navbar--menu-open': ui.isMenuOpen }">
     <div class="navbar__inner container">
       <nav class="navbar__links navbar__links--left" aria-label="Primary">
         <button class="navbar__link" :class="{ 'is-active': route.path === '/' }" @click="goHome">
@@ -139,6 +139,16 @@ function toggleMobileMenu() {
     background: rgba(5, 5, 5, 0.72);
     backdrop-filter: blur(14px) saturate(140%);
     border-bottom-color: var(--color-border);
+  }
+
+  // Fully solid black (no blur/translucency), overriding --scrolled when
+  // both apply — the open mobile menu should read as one continuous,
+  // fullscreen black surface with the bar on top, not a blurred strip
+  // sitting above it.
+  &--menu-open {
+    background: var(--color-ink);
+    backdrop-filter: none;
+    border-bottom-color: transparent;
   }
 
   // 1fr / auto / 1fr keeps the logo mathematically centered on the row at
@@ -286,14 +296,14 @@ function toggleMobileMenu() {
     background: var(--color-ink);
     flex-direction: column;
     justify-content: center;
-    gap: var(--space-3);
+    gap: var(--space-4);
     padding: var(--space-5) var(--gutter);
   }
   
 
   &__mobile-link {
     font-family: var(--font-display);
-    font-size: clamp(1.8rem, 8vw, 2.6rem);
+    font-size: clamp(2.8rem, 13vw, 4.2rem);
     letter-spacing: var(--tracking-tight);
     text-align: left;
     color: var(--color-cream);

@@ -5,11 +5,14 @@ import { counterOnScroll } from '@/animations/reveal'
 
 const stripEl = ref<HTMLElement | null>(null)
 
+// Honest numbers rather than inflated ones — this is a graduate portfolio,
+// not an agency with a decade of client history, and it reads more credibly
+// (not less impressively) for saying so plainly.
 const stats = [
-  { value: 8, suffix: '+', label: 'Years of Experience' },
-  { value: 42, suffix: '', label: 'Completed Projects' },
-  { value: 12, suffix: '+', label: 'Technologies' },
-  { value: 5, suffix: '', label: 'Creative Disciplines' }
+  { value: 2, suffix: '', label: 'Years of Formal Training' },
+  { value: 8, suffix: '', label: 'Self-Initiated Projects' },
+  { value: 12, suffix: '+', label: 'Tools & Technologies' },
+  { value: 6, suffix: '', label: 'Creative Disciplines' }
 ]
 
 const counterRefs = ref<(HTMLElement | null)[]>([])
