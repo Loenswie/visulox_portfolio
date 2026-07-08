@@ -28,6 +28,9 @@ export interface Project {
    *  whether behanceLink happens to be filled in, so a project can have a
    *  link on file without it being shown. */
   showBehance: boolean
+  /** Third-party press coverage of the project (e.g. a news article) — shown
+   *  as its own button, separate from the live-site and Behance links. */
+  pressLink?: string
 }
 
 export const projects: Project[] = rawProjects as Project[]

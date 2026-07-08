@@ -7,7 +7,7 @@ import { prefersReducedMotion } from '@/animations/motion'
 useHead(() => ({
   title: 'About | VISULOX',
   description:
-    'Louis Lefebure, the person behind VISULOX. A multidisciplinary creative working across branding, digital experiences and creative development.',
+    'Louis Lefebure, the person behind VISULOX. A graphic designer working across branding, campaigns and digital experiences, with front-end development to bring it all to life.',
   image: '/Profielfoto_Grungy.jpg'
 }))
 
@@ -21,8 +21,8 @@ const disciplines = [
     copy: 'Editorial layouts, asymmetry with intent, and interfaces that read like a considered piece of print before they read like software.'
   },
   {
-    title: 'Frontend Development',
-    copy: 'Vue, TypeScript and GSAP used to actually ship the systems I design, with no handoff gap between the mockup and the browser.'
+    title: 'Print Design',
+    copy: 'Campaigns, packaging and posters, one idea holding together across every touchpoint it needs to survive.'
   },
   {
     title: 'Photography',
@@ -33,8 +33,8 @@ const disciplines = [
     copy: 'Cutting motion for campaigns and reels with the same grain, contrast and pacing that carries through the rest of the system.'
   },
   {
-    title: 'Creative Direction',
-    copy: 'Holding a visual idea together across every surface it touches, from a single Instagram frame to a full product interface.'
+    title: 'Development',
+    copy: 'Vue, TypeScript and GSAP used to actually ship the systems I design, with no handoff gap between the mockup and the browser.'
   }
 ]
 
@@ -96,7 +96,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="about-page">
     <section ref="heroEl" class="about-hero" aria-label="Louis Lefebure">
-      <h1 class="sr-only">Software Engineer / Graphic Designer - Louis Lefebure</h1>
+      <h1 class="sr-only">Graphic Designer / Software Engineer - Louis Lefebure</h1>
       <div class="about-hero__stage">
         <span ref="heroBackWordEl" class="about-hero__word about-hero__word--back" aria-hidden="true">
           Software<br />Engineer
@@ -118,17 +118,17 @@ onBeforeUnmount(() => {
       <div class="about-page__copy">
         <p class="type-eyebrow">About Louis Lefebure</p>
         <p class="type-body-lg about-page__lede">
-          VISULOX is what happens when a designer refuses to stop coding, and an engineer refuses
-          to stop looking at type foundries at 2am. I'm a multidisciplinary creative who builds
-          the visual system and the software that carries it, in the same breath.
+          VISULOX is, first and foremost, a graphic design practice, run by someone who also
+          refuses to stop coding. I'm a designer at the core, who happens to be able to build the
+          software that carries the vision too.
         </p>
         <p class="about-page__body">
           Most studios split the two: someone designs, someone else implements, and the idea
-          erodes a little at every handoff. I work the seam between them on purpose. A brand
-          system I build gets stress-tested in a real browser before it's called finished; a
-          piece of software I ship was drawn, gridded and typeset before a single component
-          existed. That's the whole philosophy behind "the art of creating your vision": vision
-          isn't a mood board, it's a thing you actually build.
+          erodes a little at every handoff. Design comes first here, every project starts as a
+          visual idea before it becomes anything else, but when a project calls for it, I can
+          carry it all the way into a real, working piece of software myself. That's the whole
+          philosophy behind "the art of creating your vision": vision isn't a mood board, it's a
+          thing you actually build.
         </p>
       </div>
     </section>

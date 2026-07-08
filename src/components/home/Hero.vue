@@ -23,7 +23,7 @@ const taglinePhrases = [
   'Designed. Built. Shipped.',
   'A designer who codes.',
   'Still learning, still building.',
-  'Design meets development.'
+  'Design first, code second.'
 ]
 const typedText = ref('')
 let typewriterTimeout: ReturnType<typeof setTimeout> | undefined
@@ -185,7 +185,7 @@ onBeforeUnmount(() => {
 
     <div class="hero__bottom">
       <div ref="metaEl" v-show="heroReady" class="hero__meta">
-        <p class="type-eyebrow">Creative Developer / Graphic Designer</p>
+        <p class="type-eyebrow">Graphic Designer / Creative Developer</p>
         <MagneticButton label="View the work" to="/work" cursor-label="Explore" />
       </div>
       <h1 ref="titleEl" v-show="heroReady" class="hero__wordmark">VISULOX</h1>

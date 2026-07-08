@@ -27,10 +27,14 @@ function setGalleryRef(el: Element | ComponentPublicInstance | null, i: number) 
   if (el instanceof HTMLElement) galleryRefs.value[i] = el
 }
 
+function isVideo(src: string) {
+  return /\.(mp4|webm|mov)$/i.test(src)
+}
+
 onMounted(() => {
   galleryRefs.value.forEach((wrapper) => {
-    const img = wrapper.querySelector('img')
-    if (img) maskRevealImage(wrapper, img)
+    const media = wrapper.querySelector('img, video')
+    if (media) maskRevealImage(wrapper, media)
   })
 })
 
@@ -93,6 +97,12 @@ if (!project.value) {
           :href="project.behanceLink"
           variant="ghost"
         />
+        <MagneticButton
+          v-if="project.pressLink"
+          label="Press Coverage"
+          :href="project.pressLink"
+          variant="ghost"
+        />
       </div>
     </section>
 
@@ -103,7 +113,8 @@ if (!project.value) {
         :ref="(el) => setGalleryRef(el, i)"
         class="project-detail__gallery-item"
       >
-        <img :src="img" :alt="`${project.title} image ${i + 1}`" loading="lazy" decoding="async" />
+        <video v-if="isVideo(img)" :src="img" autoplay loop muted playsinline preload="auto" />
+        <img v-else :src="img" :alt="`${project.title} image ${i + 1}`" loading="lazy" decoding="async" />
       </div>
     </section>
 
@@ -250,7 +261,8 @@ if (!project.value) {
     margin-bottom: var(--space-4);
     overflow: hidden;
 
-    img {
+    img,
+    video {
       width: 100%;
       height: auto;
       display: block;

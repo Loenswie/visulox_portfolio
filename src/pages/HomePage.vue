@@ -9,7 +9,7 @@ import Finale from '@/components/home/Finale.vue'
 useHead(() => ({
   title: 'Home | VISULOX',
   description:
-    'VISULOX is the creative identity of Louis Lefebure, a multidisciplinary creative working across branding, digital experiences and creative development. The art of creating your vision.',
+    'VISULOX is the creative identity of Louis Lefebure, a graphic designer working across branding, campaigns and digital experiences, with front-end development to bring it all to life. The art of creating your vision.',
   image: '/Profielfoto_Grungy.jpg'
 }))
 </script>

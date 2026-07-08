@@ -10,7 +10,7 @@ const activeIndex = ref<number | null>(null)
 const pillars = [
   {
     index: '01',
-    title: 'Visual Identity',
+    title: 'Branding',
     summary: 'Marks and systems built to hold up outside a moodboard.',
     detail: 'Strategy, naming, visual identity and the guidelines to keep it intact once it leaves my hands.',
     tags: ['Strategy', 'Identity', 'Guidelines'],
