@@ -22,8 +22,7 @@ useHead(() => ({
   image: project.value?.heroImage
 }))
 
-// See StatsStrip.vue for why this is typed against Element | ComponentPublicInstance
-// rather than just Element — that's the actual type Vue's `:ref` callback passes.
+// Vue's :ref callback passes Element | ComponentPublicInstance, not just Element.
 function setGalleryRef(el: Element | ComponentPublicInstance | null, i: number) {
   if (el instanceof HTMLElement) galleryRefs.value[i] = el
 }
@@ -73,15 +72,15 @@ if (!project.value) {
       </div>
       <div class="project-detail__narrative">
         <div class="project-detail__narrative-item">
-          <p class="type-eyebrow">01 — Challenge</p>
+          <p class="type-eyebrow">01 - Challenge</p>
           <p>{{ project.challenge }}</p>
         </div>
         <div class="project-detail__narrative-item">
-          <p class="type-eyebrow">02 — Approach</p>
+          <p class="type-eyebrow">02 - Approach</p>
           <p>{{ project.approach }}</p>
         </div>
         <div class="project-detail__narrative-item">
-          <p class="type-eyebrow">03 — Result</p>
+          <p class="type-eyebrow">03 - Result</p>
           <p>{{ project.result }}</p>
         </div>
       </div>
@@ -118,7 +117,7 @@ if (!project.value) {
         :to="`/work/${nextProject.slug}`"
         class="project-detail__nav-btn project-detail__nav-btn--next"
       >
-        <span>Next — {{ nextProject.title }}</span>
+        <span>Next - {{ nextProject.title }}</span>
         <span class="project-detail__nav-arrow" aria-hidden="true">→</span>
       </router-link>
     </footer>
@@ -157,7 +156,6 @@ if (!project.value) {
     padding-bottom: var(--space-6);
   }
 
-  // Small chips sitting above the title, matching the work-overview cards.
   &__categories {
     @include m.chip-list;
   }
@@ -199,10 +197,7 @@ if (!project.value) {
     margin-top: var(--space-2);
   }
 
-  // Replaces what used to be a single long-form paragraph. Three equal
-  // columns at desktop (each a self-contained beat: Challenge / Approach /
-  // Result), stacked with hairline-separated rows once there's no room to
-  // read three columns side by side.
+  // Three self-contained beats (Challenge / Approach / Result), stacked below tablet.
   &__narrative {
     margin-top: var(--space-6);
     display: grid;
@@ -237,9 +232,7 @@ if (!project.value) {
     flex-wrap: wrap;
   }
 
-  // Masonry-style overview via CSS columns: each image keeps its own natural
-  // aspect ratio instead of being stretched edge to edge, so a tall portrait
-  // shot and a wide landscape shot sit naturally side by side.
+  // CSS columns masonry — each image keeps its own aspect ratio.
   &__gallery {
     column-count: 2;
     column-gap: var(--space-4);
@@ -278,10 +271,7 @@ if (!project.value) {
     }
   }
 
-  // Tight rectangle-behind-text chip rather than a plain text link — a solid
-  // cream plane hugging the label closely, flipping to the accent color on
-  // hover. Deliberately snugger padding than the homepage's MagneticButton
-  // (that one stays untouched); this is its own, tighter-fitting style.
+  // Tighter padding than the homepage MagneticButton (untouched) on purpose.
   &__nav-btn {
     display: inline-flex;
     align-items: center;

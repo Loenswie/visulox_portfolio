@@ -36,11 +36,7 @@ onMounted(() => {
     }
   })
 
-  // Positioned so the fade finishes at exactly the same moment the counter
-  // (and therefore the whole timeline / the "done" emit) does. Previously the
-  // fade ended earlier than the timeline itself, leaving a brief gap where the
-  // loader was already invisible but isLoading hadn't flipped yet, so the
-  // hero content flashed in unanimated underneath it.
+  // Timed to finish exactly when the counter (and the "done" emit) does, so nothing flashes unanimated underneath.
   tl.to(
     loaderEl.value,
     {

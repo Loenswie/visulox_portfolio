@@ -69,9 +69,6 @@ const { setVariant, reset } = useCustomCursor()
   &__meta {
     display: flex;
     flex-direction: column;
-    // Tighter than the space-2 gap used elsewhere — the categories read as
-    // a caption on the title, so they should sit close under it rather than
-    // floating with a full spacing-scale gap in between.
     gap: 6px;
     margin-top: var(--space-3);
   }
@@ -80,10 +77,6 @@ const { setVariant, reset } = useCustomCursor()
     text-transform: uppercase;
   }
 
-  // Light chip on dark background, sharp corners (no border-radius) —
-  // deliberately high-contrast so the categories read as distinct tags
-  // rather than a plain inline text line. Shared with the project detail
-  // hero and the services/technologies lists via the chip-list mixin.
   &__categories {
     @include m.chip-list;
   }

@@ -20,14 +20,7 @@ function onScroll() {
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }))
 onBeforeUnmount(() => window.removeEventListener('scroll', onScroll))
 
-// The mobile menu never actually locked page scroll — Lenis kept running
-// and the body stayed scrollable underneath it, so on a phone you could
-// scroll the real page behind the (mostly opaque) menu panel; the one
-// strip that IS transparent when not yet "scrolled" is the nav bar itself,
-// so that scrolling page content became visible right through/behind the
-// logo. Watching isMenuOpen here means every way the menu can close
-// (the burger, or any of the nav-link handlers below calling
-// toggleMenu(false)) reliably unlocks again too.
+// Locks body scroll while the mobile menu is open (Lenis otherwise keeps scrolling the page behind it).
 watch(
   () => ui.isMenuOpen,
   (open) => (open ? lock() : unlock())
@@ -141,19 +134,13 @@ function toggleMobileMenu() {
     border-bottom-color: var(--color-border);
   }
 
-  // Fully solid black (no blur/translucency), overriding --scrolled when
-  // both apply — the open mobile menu should read as one continuous,
-  // fullscreen black surface with the bar on top, not a blurred strip
-  // sitting above it.
+  // Solid black, overriding --scrolled — the open mobile menu reads as one continuous surface.
   &--menu-open {
     background: var(--color-ink);
     backdrop-filter: none;
     border-bottom-color: transparent;
   }
 
-  // 1fr / auto / 1fr keeps the logo mathematically centered on the row at
-  // every breakpoint: the two outer tracks always share the remaining space
-  // equally, regardless of how much content (or none) sits in them.
   &__inner {
     height: 100%;
     display: grid;
@@ -161,10 +148,6 @@ function toggleMobileMenu() {
     align-items: center;
     gap: var(--space-4);
 
-    // The centered-logo grid isn't worth fighting at phone width — once the
-    // links are hidden and it's just the logo + burger left, a plain flex
-    // row with space-between (logo left, burger right) is simpler and more
-    // predictable than trying to keep the 3-column grid math centered.
     @include m.mobile {
       display: flex;
       justify-content: space-between;
@@ -187,9 +170,6 @@ function toggleMobileMenu() {
     display: flex;
     gap: var(--space-4);
 
-    // Kept as a real, non-hamburger nav all the way down to the actual
-    // phone breakpoint — it used to switch at the laptop tier (1080px),
-    // which meant tablets/iPads lost the full nav way earlier than needed.
     @include m.mobile {
       display: none;
     }
@@ -206,9 +186,7 @@ function toggleMobileMenu() {
     gap: var(--space-4);
   }
 
-  // Hover/active state is a rectangular plane that wipes in left-to-right
-  // behind the label (not an underline), and the button itself never moves —
-  // only the fill and the text color transition.
+  // Hover/active fills a rectangular plane behind the label rather than an underline.
   &__link {
     position: relative;
     overflow: hidden;
@@ -268,8 +246,6 @@ function toggleMobileMenu() {
       transition: transform 0.4s var(--ease-premium), opacity 0.3s var(--ease-premium);
     }
 
-    // 3 lines at rest; opening collapses the middle one and rotates the
-    // outer two into an X, rather than only ever having 2 lines.
     &.is-open span:nth-child(1) {
       transform: translateY(6px) rotate(45deg);
     }
@@ -299,7 +275,6 @@ function toggleMobileMenu() {
     gap: var(--space-4);
     padding: var(--space-5) var(--gutter);
   }
-  
 
   &__mobile-link {
     font-family: var(--font-display);

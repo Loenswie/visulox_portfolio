@@ -22,7 +22,7 @@ function setMeta(name: string, content: string, attr: 'name' | 'property' = 'nam
 export function useHead(meta: () => HeadMeta) {
   watchEffect(() => {
     const { title, description, image } = meta()
-    const fullTitle = title.includes(SITE_NAME) ? title : `${title} — ${SITE_NAME}`
+    const fullTitle = title.includes(SITE_NAME) ? title : `${title} - ${SITE_NAME}`
     document.title = fullTitle
 
     if (description) {

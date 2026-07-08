@@ -10,39 +10,71 @@ const ui = useUiStore()
 
 const heroEl = ref<HTMLElement | null>(null)
 const metaEl = ref<HTMLElement | null>(null)
+const taglineEl = ref<HTMLElement | null>(null)
 const titleEl = ref<HTMLElement | null>(null)
 const bgEl = ref<HTMLElement | null>(null)
 const fadeEl = ref<HTMLElement | null>(null)
 
-// Kept hidden (via v-show) until the intro animation actually starts, as a
-// safety net so the raw, unanimated text can never flash on screen for a
-// frame even if the loader's timing ever drifts.
+// Hidden via v-show until intro starts, so raw text never flashes on screen.
 const heroReady = ref(false)
+
+// Typed, deleted, retyped — short on purpose so it always stays on one line.
+const taglinePhrases = [
+  'Designed. Built. Shipped.',
+  'A designer who codes.',
+  'Still learning, still building.',
+  'Design meets development.'
+]
+const typedText = ref('')
+let typewriterTimeout: ReturnType<typeof setTimeout> | undefined
+let phraseIdx = 0
+let charIdx = 0
+let deleting = false
+
+const TYPE_SPEED = 55
+const DELETE_SPEED = 32
+const HOLD_FULL = 1700
+const HOLD_EMPTY = 350
+
+function tickTypewriter() {
+  const current = taglinePhrases[phraseIdx]
+  if (!deleting) {
+    charIdx++
+    typedText.value = current.slice(0, charIdx)
+    if (charIdx === current.length) {
+      deleting = true
+      typewriterTimeout = setTimeout(tickTypewriter, HOLD_FULL)
+      return
+    }
+    typewriterTimeout = setTimeout(tickTypewriter, TYPE_SPEED)
+  } else {
+    charIdx--
+    typedText.value = current.slice(0, charIdx)
+    if (charIdx === 0) {
+      deleting = false
+      phraseIdx = (phraseIdx + 1) % taglinePhrases.length
+      typewriterTimeout = setTimeout(tickTypewriter, HOLD_EMPTY)
+      return
+    }
+    typewriterTimeout = setTimeout(tickTypewriter, DELETE_SPEED)
+  }
+}
 
 let splitTitle: ReturnType<typeof kineticReveal> | null = null
 let scrollTween: ReturnType<typeof gsap.to> | null = null
 let bgParallax: ReturnType<typeof gsap.to> | null = null
 let resizeTimeout: ReturnType<typeof setTimeout> | undefined
 
-// The CSS clamp()/vw sizing is a best-effort guess at Unbounded's actual
-// glyph metrics — close, but not exact, and "the X gets clipped/wrapped at
-// some viewport width" is exactly what happens when that guess runs even
-// slightly hot. Rather than continuing to hand-tune vw coefficients blind,
-// measure the *actual* rendered width against the box's available width and
-// shrink the font-size just enough to guarantee it always fits, at any
-// viewport size, on any browser's font rendering — no more guessing.
+// Measures the rendered wordmark against its available width and shrinks the
+// font-size just enough to guarantee it never overflows, at any viewport size.
 function fitWordmark() {
   const el = titleEl.value
   if (!el) return
-  // Clear any previous correction first so we re-measure against the CSS
-  // clamp's own fresh value for the *current* viewport, not a shrunk one
-  // left over from a narrower size.
   el.style.fontSize = ''
   const available = el.clientWidth
   const needed = el.scrollWidth
   if (needed > available && available > 0) {
     const current = parseFloat(getComputedStyle(el).fontSize)
-    // 0.97 safety margin so it never lands pixel-perfect on the edge.
     el.style.fontSize = `${current * (available / needed) * 0.97}px`
   }
 }
@@ -57,13 +89,6 @@ function startIntro() {
   heroReady.value = true
   const reduced = prefersReducedMotion()
 
-  // Back to per-character split (was 'words' — see git history). The word-level
-  // split didn't actually cause the X's vertical misalignment (there's only one
-  // fragment either way, so it's a single native text run in both cases — this
-  // looks like a genuine glyph-design quirk in Unbounded's "X", not something
-  // introduced by SplitType). Splitting by 'chars' gives each letter its own
-  // span again, which is what lets us target the X specifically with CSS below
-  // if it still looks off after this.
   splitTitle = kineticReveal(titleEl.value, { by: 'chars', delay: 0.1 })
 
   if (metaEl.value) {
@@ -73,14 +98,24 @@ function startIntro() {
       { opacity: 1, y: 0, duration: reduced ? 0.3 : 0.9, ease: 'expo.out', stagger: 0.1, delay: 0.3 }
     )
   }
+
+  if (taglineEl.value) {
+    gsap.fromTo(
+      taglineEl.value.children,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: reduced ? 0.3 : 0.9, ease: 'expo.out', stagger: 0.1, delay: 0.45 }
+    )
+  }
+
+  // A beat of just the blinking cursor before typing starts. Reduced-motion visitors get the first phrase, static.
+  if (reduced) {
+    typedText.value = taglinePhrases[0]
+  } else {
+    typewriterTimeout = setTimeout(tickTypewriter, 900)
+  }
 }
 
 onMounted(() => {
-  // Fit before the reveal split runs, so SplitType measures/positions its
-  // word span against the final, corrected font-size rather than the raw
-  // CSS value. Runs once immediately (covers cached fonts) and again once
-  // the webfont has actually finished loading, since measuring against a
-  // fallback font's metrics would give the wrong answer.
   fitWordmark()
   document.fonts?.ready?.then(fitWordmark)
   window.addEventListener('resize', scheduleFitWordmark, { passive: true })
@@ -126,6 +161,7 @@ onBeforeUnmount(() => {
   bgParallax?.kill()
   window.removeEventListener('resize', scheduleFitWordmark)
   if (resizeTimeout) clearTimeout(resizeTimeout)
+  if (typewriterTimeout) clearTimeout(typewriterTimeout)
 })
 </script>
 
@@ -137,6 +173,14 @@ onBeforeUnmount(() => {
       <div class="hero__bg-blob hero__bg-blob--b" />
       <div class="hero__bg-scrim" />
       <div ref="fadeEl" class="hero__bg-fade" />
+    </div>
+
+    <!-- Only in-flow child above the bottom-anchored wordmark, so flex:1 fills the leftover space. -->
+    <div ref="taglineEl" v-show="heroReady" class="hero__tagline">
+      <p class="type-body-lg hero__tagline-line">The art of creating your vision.</p>
+      <p class="type-body-lg hero__tagline-line hero__tagline-line--dim hero__tagline-line--typed">
+        <span>{{ typedText }}</span><span class="hero__tagline-cursor" aria-hidden="true" />
+      </p>
     </div>
 
     <div class="hero__bottom">
@@ -157,9 +201,6 @@ onBeforeUnmount(() => {
   min-height: 100svh;
   display: flex;
   flex-direction: column;
-  // hero__bg is position:absolute (out of flow), so hero__bottom is the only
-  // in-flow child — flex-end is what actually pins it to the bottom of the
-  // viewport. (space-between only makes sense with 2+ flex children.)
   justify-content: flex-end;
   padding-top: var(--nav-height);
   padding-bottom: var(--space-4);
@@ -171,32 +212,18 @@ onBeforeUnmount(() => {
     inset: 0;
     z-index: 0;
     overflow: hidden;
-    // Fallback base colour — briefly visible at the very edges/before the
-    // photo below finishes decoding, and keeps things dark if it ever fails
-    // to load.
     background: linear-gradient(160deg, #0b0b0b 0%, #050505 55%, #000 100%);
   }
 
-  // The real grungy title-background photo. A static CSS background-image
-  // (not an <img>) since it's purely decorative and already sits behind an
-  // aria-hidden wrapper; cover + center keeps it filling the viewport at
-  // any aspect ratio without distortion.
   &__bg-photo {
     position: absolute;
     inset: 0;
     background-image: url('/BACKGROUND_TITLE.jpg');
     background-size: cover;
     background-position: center;
-    // Slight extra contrast/darkening — the source is already near-black
-    // and grungy, this just makes sure the cream wordmark always reads
-    // clearly against it regardless of which crop shows at a given
-    // viewport size.
     filter: contrast(1.08) brightness(0.82);
   }
 
-  // Oversized, blurred gradient "blobs" drifting on transform only (no
-  // background-position / filter animation) so the idle motion in the hero
-  // stays fully on the compositor and never touches layout or paint.
   &__bg-blob {
     position: absolute;
     border-radius: 50%;
@@ -207,20 +234,9 @@ onBeforeUnmount(() => {
       left: -15%;
       width: 70vw;
       height: 70vw;
-      // Static now — the drifting animation was removed for performance.
-      // Even though it was transform-only, two independently-animating
-      // full-viewport gradient layers is still two things the compositor
-      // has to keep re-evaluating every frame indefinitely; dropping this
-      // one removes that cost outright while keeping the violet glow itself.
       background: radial-gradient(closest-side, rgba(105, 61, 174, 0.22), transparent 72%);
 
-      // `vw`-based sizing shrinks in lockstep with a narrow phone screen —
-      // at 70vw on a 375px phone that's a ~260px circle mostly positioned
-      // off-canvas (top:-20%/left:-15%), so almost none of it was actually
-      // visible ("the purple blob isn't here"). It also happens to be the
-      // one bit of visual interest available to fill the empty space above
-      // the now bottom-aligned wordmark, so it's sized up and boosted in
-      // opacity specifically on mobile rather than just left to fade out.
+      // Bigger + brighter on mobile, filling the empty space above the wordmark.
       @include m.mobile {
         top: 0%;
         left: -0%;
@@ -240,9 +256,6 @@ onBeforeUnmount(() => {
     }
   }
 
-  // Grounds the bottom-left corner (where the wordmark + eyebrow/CTA sit)
-  // in solid dark regardless of what's directly behind them in the photo.
-  // Static — no animation, so it's a one-time paint cost, not a per-frame one.
   &__bg-scrim {
     position: absolute;
     inset: 0;
@@ -261,9 +274,52 @@ onBeforeUnmount(() => {
     z-index: 1;
   }
 
-  // Shares the wordmark's own padding-inline (not the container gutter) so
-  // the eyebrow and the CTA line up exactly with the left/right edge of
-  // "VISULOX" below them, per design feedback.
+  &__tagline {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding-inline: var(--space-5);
+    text-align: center;
+
+    @include m.mobile {
+      justify-content: center;
+    }
+  }
+
+  &__tagline-line {
+    max-width: 36ch;
+    color: var(--color-cream);
+
+    &--dim {
+      color: var(--color-cream-dim);
+    }
+
+    // Always a single line — phrases are kept short enough to fit without wrapping or overflowing.
+    &--typed {
+      white-space: nowrap;
+      max-width: none;
+    }
+
+    @include m.mobile {
+      font-size: var(--fs-body);
+    }
+  }
+
+  &__tagline-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 0.9em;
+    margin-left: 2px;
+    vertical-align: -0.12em;
+    background: var(--color-cream-dim);
+    animation: hero-cursor-blink 0.9s step-end infinite;
+  }
+
   &__meta {
     display: flex;
     align-items: center;
@@ -288,24 +344,12 @@ onBeforeUnmount(() => {
     color: var(--color-cream);
     overflow: hidden;
     text-align: left;
-    // Belt-and-braces: fitWordmark() (see script) should always keep this
-    // from overflowing, but nowrap means that if it ever ran slightly hot
-    // regardless, the failure mode is a clipped edge (overflow: hidden
-    // above), never a wrapped second line.
     white-space: nowrap;
 
-    // Switch to the smaller/steeper clamp earlier (at the laptop breakpoint,
-    // not just tablet) so iPad-sized viewports never end up with an
-    // oversized wordmark fighting the available width.
     @include m.laptop {
       font-size: clamp(3.4rem, 21vw, 12rem);
     }
 
-    // Back to the same horizontal layout as tablet/desktop, just its own
-    // clamp tier — the rotated vertical-sidebar treatment tried here was
-    // reverted per feedback (kept VISULOX at the bottom, matching the rest
-    // of the site). fitWordmark() (see script) still guarantees this never
-    // overflows regardless of exactly how this clamp is tuned.
     @include m.mobile {
       font-size: clamp(2.4rem, 15vw, 4.5rem);
     }
@@ -321,4 +365,14 @@ onBeforeUnmount(() => {
   }
 }
 
+@keyframes hero-cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}
 </style>

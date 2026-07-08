@@ -16,11 +16,7 @@ const socials = [
   { label: 'LinkedIn', href: 'https://www.linkedin.com/in/louis-lefebure-057a33280/' }
 ]
 
-// Live clock — Zedelgem sits in the Europe/Brussels zone, so letting Intl
-// resolve the offset (rather than hardcoding +1/+2) means it stays correct
-// across the DST switch automatically. A 1s interval formatting a short
-// string is negligible cost, nothing like the per-frame animation work
-// elsewhere on the site.
+// Zedelgem is Europe/Brussels — Intl resolves DST automatically.
 const clockTime = ref('')
 const clockDate = ref('')
 let clockInterval: ReturnType<typeof setInterval> | undefined
@@ -124,30 +120,16 @@ function goContact() {
   background: var(--color-ink);
   display: flex;
   flex-direction: column;
-  // Same bottom-anchored composition as the hero: a tall section with its
-  // two content blocks pushed to the top and bottom edges respectively,
-  // rather than centered with generous margins everywhere.
   justify-content: space-between;
-  // Was missing entirely (should have matched the hero's full-viewport
-  // treatment from the start) — restoring it here.
   min-height: 100svh;
   padding-top: var(--space-7);
   padding-bottom: var(--space-4);
 
-  // A full-viewport-tall footer reads as intentional and cinematic on
-  // larger screens, but forces mobile visitors to scroll through a mostly
-  // empty screen just to reach the copyright line — so it collapses back
-  // to a normal, content-height footer below the tablet breakpoint.
   @include m.tablet {
     min-height: 0;
     padding-top: var(--space-6);
   }
 
-  // Flex instead of grid(1fr auto) — the grid's first "1fr" track forced
-  // the nav column to stretch to fill all remaining width regardless of
-  // its own content, which is what was throwing off the gap to the socials
-  // column. Flex + space-between sizes both blocks to their own content and
-  // distributes the leftover space between them instead.
   &__main {
     display: flex;
     justify-content: space-between;
@@ -171,14 +153,6 @@ function goContact() {
     align-items: flex-start;
   }
 
-  // Scaled way up from the original 2rem/5.5vw/3.75rem per feedback ("4x as
-  // big"). A literal 4x on every number (8rem/22vw/15rem) would hit ~240px
-  // at common desktop widths — wide enough that a single word like
-  // "Contact" would overflow the container well before the vw slope even
-  // caps out, reintroducing the exact overflow/wrap problem just fixed on
-  // the hero wordmark. This keeps the same much-larger spirit (the floor
-  // alone is already bigger than the old ceiling) with a slope/ceiling
-  // tuned to stay inside the container at realistic viewport widths.
   &__nav-link {
     font-family: var(--font-display);
     font-size: clamp(6rem, 9vw, 9rem);
@@ -257,8 +231,6 @@ function goContact() {
   }
 
   &__clock-line {
-    // Tabular figures keep the seconds from jittering the line width every
-    // tick — a one-line CSS fix rather than reserving fixed pixel width.
     font-variant-numeric: tabular-nums;
 
     &--dim {

@@ -3,18 +3,13 @@ import { ref } from 'vue'
 const enabled = ref(false)
 let ambient: HTMLAudioElement | null = null
 
-/**
- * Elegant, tasteful sound toggle. Defaults to muted. If no ambient track is
- * present at /audio/ambient.mp3 (public dir) it fails silently — the toggle
- * still works as a UI affordance, it just won't produce sound until a real
- * asset is added.
- */
+/** Elegant, tasteful sound toggle. Defaults to muted, kept deliberately quiet. */
 export function useSound() {
   function ensureAudio() {
     if (ambient) return ambient
-    ambient = new Audio('/audio/ambient.mp3')
+    ambient = new Audio('/audio.mp3')
     ambient.loop = true
-    ambient.volume = 0.18
+    ambient.volume = 0.03
     return ambient
   }
 

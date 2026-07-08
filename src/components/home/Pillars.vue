@@ -4,8 +4,7 @@ import { staggerUpOnScroll } from '@/animations/reveal'
 
 const listEl = ref<HTMLElement | null>(null)
 
-// Hovered row drives the side preview image — index into `pillars`, null
-// when nothing is hovered (panel hidden).
+// Index into `pillars` for the hovered row's side preview; null hides the panel.
 const activeIndex = ref<number | null>(null)
 
 const pillars = [
@@ -67,9 +66,7 @@ onMounted(() => {
 
 <template>
   <section class="pillars section" aria-label="What I do">
-    <!-- Section no longer carries a visible display title — the oversized
-         row titles themselves are the heading now. Kept as a real heading
-         for document outline / screen-reader users, just visually hidden. -->
+    <!-- Visually hidden — the oversized row titles are the heading now, this is just for the outline/a11y. -->
     <h2 class="sr-only">What I do</h2>
 
     <ul
@@ -97,11 +94,7 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Anchored to this row specifically (not a viewport-fixed panel),
-             so the image always sits right where its own title is, at the
-             side, regardless of how far down the page that row happens to
-             be. Only mounted while this exact row is hovered, so the other
-             four images never load over the network at all until hovered. -->
+        <!-- Anchored to this row (not viewport-fixed); only mounted while hovered, so unhovered images never load. -->
         <Transition name="pillars-preview">
           <div v-if="activeIndex === i" class="pillars__item-preview" aria-hidden="true">
             <img :src="p.image" alt="" loading="lazy" decoding="async" />
@@ -128,10 +121,6 @@ onMounted(() => {
     grid-template-columns: auto 1fr;
     align-items: baseline;
     column-gap: var(--space-4);
-    // Tight, table-of-contents rhythm — rows sit right against each other
-    // rather than floating with generous space around them; the number +
-    // title alone (no permanently-visible summary line anymore) carry the
-    // section on their own size/weight.
     padding-block: var(--space-2);
     @include m.hairline(top);
     transition: background-color 0.5s var(--ease-premium);
@@ -160,8 +149,6 @@ onMounted(() => {
     }
   }
 
-  // Numbers matched 1:1 to the title's size/line-height so both read as one
-  // oversized, kinetic block rather than a small label next to a big word.
   &__index,
   &__title {
     font-family: var(--font-display);
@@ -194,14 +181,7 @@ onMounted(() => {
       margin-top 0.5s var(--ease-premium);
   }
 
-  // The actual reason the gap wasn't closing: .pillars__detail had THREE
-  // direct children (lead, detail paragraph, tags list). Grid only collapses
-  // the ONE explicit 0fr row — anything past the first child falls into an
-  // auto-generated implicit row that ignores grid-template-rows entirely and
-  // keeps its natural height regardless of the 0fr/opacity state. Wrapping
-  // all three in a single child makes that child the sole grid item, so the
-  // whole block now genuinely collapses to zero instead of just fading out
-  // while still occupying its full layout height.
+  // Single wrapping child so the grid 0fr row actually collapses to zero (extra direct children break this).
   &__detail-inner {
     overflow: hidden;
     min-height: 0;
@@ -236,19 +216,10 @@ onMounted(() => {
     }
   }
 
-  // Anchored to its own row (the `<li>` above is `position: relative`), so
-  // it always sits exactly at that row's title, on the right — not tied to
-  // the pointer, not fixed to the viewport centre. Absolutely positioned
-  // elements stack above normal-flow siblings by default, so this needs no
-  // z-index gymnastics to sit above neighbouring rows.
   &__item-preview {
     position: absolute;
     top: 50%;
     right: 0;
-    // Explicit z-index (not just relying on DOM order) — the image is taller
-    // than a single row and deliberately overflows into the rows above/below
-    // it, so without this the *next* li's own paint (its hairline, its text)
-    // would otherwise land on top of the overflow and clip it.
     z-index: 1;
     width: min(26vw, 380px);
     aspect-ratio: 3 / 4;

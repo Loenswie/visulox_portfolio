@@ -88,11 +88,7 @@ onMounted(() => {
     margin-top: var(--space-2);
   }
 
-  // Split into two word-groups (instead of one "Selected Work" string) so the
-  // second word can be forced onto its own line on mobile — reliably, since
-  // these spans are real Vue-rendered elements, rather than depending on
-  // SplitType's own internal word/char DOM structure (which scoped styles
-  // can't safely reach into).
+  // Real Vue spans (not SplitType's internal DOM) so --break can force the second word onto its own line.
   &__title-word {
     display: inline-block;
 

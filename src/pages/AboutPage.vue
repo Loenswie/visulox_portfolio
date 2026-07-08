@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useHead } from '@/composables/useHead'
-import { fadeUpOnScroll, gsap, ScrollTrigger, staggerUpOnScroll } from '@/animations/reveal'
+import { gsap, ScrollTrigger } from '@/animations/reveal'
 import { prefersReducedMotion } from '@/animations/motion'
 
 useHead(() => ({
@@ -38,90 +38,49 @@ const disciplines = [
   }
 ]
 
-// Kept general on purpose — real degree/role shape, without naming specific
-// schools or employers, which reads better on a portfolio than a literal CV.
+// Deliberately general — no specific school/employer names.
 const education = [
-  { year: '2015 – 2021', label: 'Secondary education, economics & modern languages — graduated with distinction.' },
-  { year: '2021 – 2024', label: "Bachelor's degree in Applied Computer Science — graduated with great distinction." },
-  { year: '2024 – 2026', label: 'Graduate program in Graphic Design, online & offline — currently completing.' }
+  { year: '2015 – 2021', title: 'Secondary education, economics & modern languages', detail: 'graduated with distinction.' },
+  { year: '2021 – 2024', title: "Bachelor's degree in Applied Computer Science", detail: 'graduated with great distinction.' },
+  { year: '2024 – 2026', title: 'Graduate program in Graphic Design, online & offline', detail: 'currently completing.' }
 ]
 
 const experience = [
-  { year: '2021 – 2026', label: 'Cinema crew member — customer-facing, organized, fast-paced environment.' },
-  { year: '2024', label: 'Software engineering internship — websites, flyers and event invitations.' },
-  { year: '2024 – 2026', label: 'Freelance graphic design — branding, flyers and photography for small clients.' },
-  { year: '2026', label: 'Graphic design internship — campaigns, branding and website work.' }
+  { year: '2021 – 2026', title: 'Cinema crew member', detail: 'customer-facing, organized, fast-paced environment.' },
+  { year: '2024', title: 'Software engineering internship', detail: 'websites, flyers and event invitations.' },
+  { year: '2024 – 2026', title: 'Freelance graphic design', detail: 'branding, flyers and photography for small clients.' },
+  { year: '2026', title: 'Graphic design internship', detail: 'campaigns, branding and website work.' }
 ]
 
 const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Vue 3', 'TypeScript', 'GSAP', 'Three.js', 'Node.js', 'Blender']
 
-const disciplineListEl = ref<HTMLElement | null>(null)
-const educationEl = ref<HTMLElement | null>(null)
-const experienceEl = ref<HTMLElement | null>(null)
-const toolsEl = ref<HTMLElement | null>(null)
-const introEl = ref<HTMLElement | null>(null)
-
 const heroEl = ref<HTMLElement | null>(null)
 const heroBackWordEl = ref<HTMLElement | null>(null)
 const heroFrontWordEl = ref<HTMLElement | null>(null)
-// Typed loosely (like Hero.vue's own scrollTween) — the ScrollTrigger
-// instance is attached to the timeline at runtime by the plugin, and isn't
-// part of GSAP's own Timeline type declarations.
 let heroScrollTrigger: ReturnType<typeof ScrollTrigger.create> | null = null
 let heroSetupTimeout: ReturnType<typeof setTimeout> | undefined
 
 onMounted(() => {
-  if (introEl.value) fadeUpOnScroll(introEl.value, { y: 32 })
-  if (disciplineListEl.value) {
-    staggerUpOnScroll(disciplineListEl.value.querySelectorAll('li'), disciplineListEl.value, { y: 28, stagger: 0.06 })
-  }
-  if (educationEl.value) {
-    staggerUpOnScroll(educationEl.value.querySelectorAll('li'), educationEl.value, { y: 20, stagger: 0.05 })
-  }
-  if (experienceEl.value) {
-    staggerUpOnScroll(experienceEl.value.querySelectorAll('li'), experienceEl.value, { y: 20, stagger: 0.05 })
-  }
-  if (toolsEl.value) fadeUpOnScroll(toolsEl.value, { y: 20 })
+  // Rest positions mirror the CSS defaults, so reduced-motion visitors see the same final layout.
+  const heroMotionEnabled = !prefersReducedMotion() && !!heroEl.value && !!heroBackWordEl.value && !!heroFrontWordEl.value
+  const isMobile = window.matchMedia('(max-width: 480px)').matches
+  const startX = isMobile ? 55 : 120
+  const restX = isMobile ? 18 : 40
 
-  // The photo never moves — it's pinned dead center for the whole section.
-  // The two words arrive one at a time, not simultaneously, so they never
-  // occupy the same space mid-scroll: "Software Engineer" (behind the photo)
-  // slides in from the left and settles upper-left during the first half of
-  // the scroll; only once it's fully in place does "Graphic Designer" (in
-  // front of the photo) slide in from the right and settle lower-right,
-  // during the second half. Same rest positions as the CSS defaults below,
-  // so reduced-motion visitors see the identical final layout, just without
-  // the scroll-driven approach.
-  //
-  // Delayed on purpose: this component mounts while DefaultLayout's own
-  // page-enter transition (0.7s) is still animating the whole page's y/
-  // opacity. Creating a `pin: true` ScrollTrigger while an ancestor is
-  // mid-transform gives it a wrong initial measurement — the pin ends up
-  // useless (the section just scrolls normally instead of holding in
-  // place). Waiting until that transition has actually finished, then
-  // creating it fresh, is what makes the pin behave correctly.
+  // Set synchronously (not in the setTimeout below) to avoid a flash of the centered CSS state first.
+  if (heroMotionEnabled) {
+    gsap.set(heroBackWordEl.value, { xPercent: -startX, yPercent: -75 })
+    gsap.set(heroFrontWordEl.value, { xPercent: startX, yPercent: -15 })
+  }
+
+  // Delayed so DefaultLayout's page-enter transition finishes before ScrollTrigger measures the pin.
   heroSetupTimeout = setTimeout(() => {
-    if (!prefersReducedMotion() && heroEl.value && heroBackWordEl.value && heroFrontWordEl.value) {
+    if (heroMotionEnabled) {
       const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: heroEl.value,
-          start: 'top top',
-          end: '+=140%',
-          scrub: 0.6,
-          pin: true
-        }
+        scrollTrigger: { trigger: heroEl.value, start: 'top top', end: '+=90%', scrub: 0.6, pin: true }
       })
-      tl.fromTo(
-        heroBackWordEl.value,
-        { xPercent: -260, yPercent: -85 },
-        { xPercent: -68, yPercent: -85, ease: 'none', duration: 0.5 },
-        0
-      ).fromTo(
-        heroFrontWordEl.value,
-        { xPercent: 260, yPercent: -12 },
-        { xPercent: 68, yPercent: -12, ease: 'none', duration: 0.5 },
-        0.5
-      )
+      tl.to(heroBackWordEl.value, { xPercent: -restX, yPercent: -75, ease: 'none' }, 0)
+        .to(heroFrontWordEl.value, { xPercent: restX, yPercent: -15, ease: 'none' }, 0)
       heroScrollTrigger = (tl as any).scrollTrigger ?? null
     }
     ScrollTrigger.refresh()
@@ -137,7 +96,7 @@ onBeforeUnmount(() => {
 <template>
   <div class="about-page">
     <section ref="heroEl" class="about-hero" aria-label="Louis Lefebure">
-      <h1 class="sr-only">Software Engineer / Graphic Designer — Louis Lefebure</h1>
+      <h1 class="sr-only">Software Engineer / Graphic Designer - Louis Lefebure</h1>
       <div class="about-hero__stage">
         <span ref="heroBackWordEl" class="about-hero__word about-hero__word--back" aria-hidden="true">
           Software<br />Engineer
@@ -149,11 +108,14 @@ onBeforeUnmount(() => {
           Graphic<br />Designer
         </span>
       </div>
-      <p class="type-eyebrow about-hero__scroll-cue">Scroll</p>
+      <div class="about-hero__scroll-cue" aria-hidden="true">
+        <span class="type-eyebrow">Scroll</span>
+        <span class="about-hero__scroll-arrow" />
+      </div>
     </section>
 
     <section class="about-page__intro section container">
-      <div ref="introEl" class="about-page__copy">
+      <div class="about-page__copy">
         <p class="type-eyebrow">About Louis Lefebure</p>
         <p class="type-body-lg about-page__lede">
           VISULOX is what happens when a designer refuses to stop coding, and an engineer refuses
@@ -175,7 +137,7 @@ onBeforeUnmount(() => {
       <div class="about-page__disciplines-head">
         <p class="type-eyebrow">Disciplines</p>
       </div>
-      <ul ref="disciplineListEl" class="about-page__discipline-list">
+      <ul class="about-page__discipline-list">
         <li v-for="d in disciplines" :key="d.title">
           <h3 class="type-display-sm">{{ d.title }}</h3>
           <p>{{ d.copy }}</p>
@@ -183,27 +145,50 @@ onBeforeUnmount(() => {
       </ul>
     </section>
 
-    <section class="about-page__education section container">
-      <p class="type-eyebrow">Education</p>
-      <ol ref="educationEl" class="about-page__record-list">
-        <li v-for="e in education" :key="e.year">
-          <span class="about-page__record-year">{{ e.year }}</span>
-          <span class="about-page__record-label">{{ e.label }}</span>
-        </li>
-      </ol>
+    <!-- mix-blend-mode: difference, same trick as the custom cursor (_cursor.scss). -->
+    <section class="about-page__statement" aria-label="Philosophy">
+      <div class="about-page__statement-bg" aria-hidden="true">
+        <img src="/BACKGROUND_PICTURE.jpg" alt="" loading="lazy" decoding="async" />
+      </div>
+      <p class="about-page__statement-text">
+        Most of the work happens where no one's looking.
+      </p>
     </section>
 
-    <section class="about-page__experience section container">
-      <p class="type-eyebrow">Experience</p>
-      <ol ref="experienceEl" class="about-page__record-list">
-        <li v-for="e in experience" :key="e.year + e.label">
-          <span class="about-page__record-year">{{ e.year }}</span>
-          <span class="about-page__record-label">{{ e.label }}</span>
-        </li>
-      </ol>
+    <section class="about-page__record section container">
+      <div class="about-page__record-stack">
+        <div class="about-page__record-col">
+          <h2 class="about-page__record-title">Education</h2>
+          <ol class="about-page__record-list">
+            <li v-for="e in education" :key="e.year">
+              <span class="about-page__record-year">{{ e.year }}</span>
+              <span class="about-page__record-label">
+                <strong>{{ e.title }}</strong> {{ e.detail }}
+              </span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="about-page__record-col">
+          <h2 class="about-page__record-title">Experience</h2>
+          <ol class="about-page__record-list">
+            <li v-for="e in experience" :key="e.year + e.title">
+              <span class="about-page__record-year">{{ e.year }}</span>
+              <span class="about-page__record-label">
+                <strong>{{ e.title }}</strong> {{ e.detail }}
+              </span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- align-self: stretch matches this to the stack's full height (CSS below). -->
+      <figure class="about-page__record-image" aria-hidden="true">
+        <img src="/apple.jpg" alt="" loading="lazy" decoding="async" />
+      </figure>
     </section>
 
-    <section ref="toolsEl" class="about-page__tools section container">
+    <section class="about-page__tools section container">
       <p class="type-eyebrow">Tools &amp; Craft</p>
       <ul class="about-page__tool-list">
         <li v-for="tool in tools" :key="tool">{{ tool }}</li>
@@ -234,16 +219,15 @@ onBeforeUnmount(() => {
     justify-content: center;
   }
 
-  // Square portrait, dead center, sits between the two text layers.
   &__photo {
     position: relative;
     z-index: 1;
-    width: min(34vw, 420px);
+    width: min(40vw, 480px);
     aspect-ratio: 1 / 1;
     flex-shrink: 0;
 
     @include m.tablet {
-      width: min(60vw, 320px);
+      width: min(66vw, 360px);
     }
 
     img {
@@ -254,19 +238,16 @@ onBeforeUnmount(() => {
     }
   }
 
-  // Diagonal rest layout by default — "Software Engineer" upper-left behind
-  // the photo, "Graphic Designer" lower-right in front of it — matching
-  // exactly where the GSAP scroll animation (see script) settles each word,
-  // so reduced-motion visitors (who never get that tween) still see the
-  // intended final composition, not an overlapping mess in the center.
+  // Both words float above the photo now (z-index > photo); their differing
+  // vertical offsets (-75% vs -15%) keep them from overlapping each other.
   &__word {
     position: absolute;
     left: 50%;
     top: 50%;
-    z-index: 0;
-    transform: translate(calc(-50% - 68%), -85%);
+    z-index: 2;
+    transform: translate(calc(-50% - 35%), -75%);
     font-family: var(--font-display);
-    font-size: clamp(2.2rem, 6.4vw, 5.5rem);
+    font-size: clamp(2.2rem, 8vw, 5.5rem);
     line-height: 0.92;
     letter-spacing: var(--tracking-tight);
     font-weight: 700;
@@ -275,9 +256,17 @@ onBeforeUnmount(() => {
     white-space: nowrap;
     color: var(--color-cream);
 
+    @include m.mobile {
+      transform: translate(calc(-50% - 16%), -75%);
+    }
+
     &--front {
-      z-index: 2;
-      transform: translate(calc(-50% + 68%), -12%);
+      z-index: 3;
+      transform: translate(calc(-50% + 35%), -15%);
+
+      @include m.mobile {
+        transform: translate(calc(-50% + 16%), -15%);
+      }
     }
   }
 
@@ -286,12 +275,81 @@ onBeforeUnmount(() => {
     bottom: var(--space-4);
     left: 50%;
     transform: translateX(-50%);
-    z-index: 3;
+    z-index: 4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-1);
     color: var(--color-cream-faint);
+  }
+
+  &__scroll-arrow {
+    width: 9px;
+    height: 9px;
+    border-right: 1px solid var(--color-cream-faint);
+    border-bottom: 1px solid var(--color-cream-faint);
+    transform: rotate(45deg);
+    animation: about-hero-scroll-bounce 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes about-hero-scroll-bounce {
+  0%,
+  100% {
+    transform: rotate(45deg) translate(0, 0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: rotate(45deg) translate(4px, 4px);
+    opacity: 1;
   }
 }
 
 .about-page {
+  &__statement {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    isolation: isolate;
+
+    @include m.mobile {
+      min-height: 56vh;
+    }
+  }
+
+  &__statement-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      filter: grayscale(1) contrast(1.3);
+    }
+  }
+
+  &__statement-text {
+    position: relative;
+    z-index: 1;
+    max-width: 22ch;
+    padding-inline: var(--gutter);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5.2vw, 4.5rem);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-tight);
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--color-cream);
+    mix-blend-mode: difference;
+  }
+
   &__copy {
     max-width: 68ch;
   }
@@ -307,8 +365,7 @@ onBeforeUnmount(() => {
   }
 
   &__disciplines,
-  &__education,
-  &__experience,
+  &__record,
   &__tools {
     @include m.hairline(top);
   }
@@ -334,6 +391,59 @@ onBeforeUnmount(() => {
     }
   }
 
+  // Photo's align-self: stretch (below) matches it to the stack's rendered height.
+  &__record {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-6);
+
+    @include m.laptop {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__record-stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+  }
+
+  &__record-col {
+    min-width: 0;
+  }
+
+  &__record-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6.5vw, 5.5rem);
+    line-height: 0.94;
+    letter-spacing: var(--tracking-tight);
+    font-weight: 700;
+    text-transform: uppercase;
+
+    @include m.laptop {
+      font-size: clamp(2.4rem, 9vw, 4rem);
+    }
+  }
+
+  &__record-image {
+    position: relative;
+    align-self: stretch;
+    width: min(26vw, 380px);
+    overflow: hidden;
+
+    @include m.laptop {
+      display: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.1);
+    }
+  }
+
   &__record-list {
     margin-top: var(--space-5);
 
@@ -354,6 +464,11 @@ onBeforeUnmount(() => {
 
   &__record-label {
     color: var(--color-cream-dim);
+
+    strong {
+      color: var(--color-cream);
+      font-weight: 700;
+    }
   }
 
   &__tool-list {

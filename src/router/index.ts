@@ -38,12 +38,7 @@ const router = createRouter({
   ]
 })
 
-// Clicking a `router-link` (e.g. a ProjectCard set to the 'view' cursor on
-// hover) navigates immediately — the element can unmount before the browser
-// ever fires `mouseleave` on it, so the cursor's reset() call never runs and
-// it gets stuck enlarged/labelled on the page you land on. Resetting on every
-// navigation is a single, reliable backstop regardless of which component
-// (or which future one) set the cursor state.
+// A router-link can unmount before its mouseleave fires, leaving the custom cursor stuck enlarged.
 router.afterEach(() => {
   useCustomCursor().reset()
 })
