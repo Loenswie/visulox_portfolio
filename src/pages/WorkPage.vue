@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { computed, nextTick, onMounted, ref } from 'vue'
 import { projects as allProjects, categories } from '@/data/projects'
+import { posters } from '@/data/posters'
 import { useHead } from '@/composables/useHead'
 import { staggerUpOnScroll } from '@/animations/reveal'
 import SplitText from '@/components/ui/SplitText.vue'
 import ProjectCard from '@/components/work/ProjectCard.vue'
+import PosterGallery from '@/components/work/PosterGallery.vue'
 
 useHead(() => ({
   title: 'Work | VISULOX',
@@ -39,7 +41,7 @@ onMounted(() => {
 <template>
   <div class="work-page">
     <header class="work-page__header section container">
-      <p class="type-eyebrow">Archive · 2023 to 2025</p>
+      <p class="type-eyebrow">Archive</p>
       <h1 class="type-display-lg work-page__title">
         <span class="work-page__title-word">
           <SplitText text="Selected" as="span" by="chars" :scroll-trigger="false" />
@@ -71,6 +73,8 @@ onMounted(() => {
         :class="i % 4 === 0 ? 'work-page__card--tall' : ''"
       />
     </div>
+
+    <PosterGallery :posters="posters" />
   </div>
 </template>
 

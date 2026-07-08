@@ -14,7 +14,7 @@ const pillars = [
     summary: 'Marks and systems built to hold up outside a moodboard.',
     detail: 'Strategy, naming, visual identity and the guidelines to keep it intact once it leaves my hands.',
     tags: ['Strategy', 'Identity', 'Guidelines'],
-    image: 'https://picsum.photos/seed/visulox-pillar-identity/900/1200'
+    image: '/projects/VERRA/Label_Tag_Mockup_2.jpg'
   },
   {
     index: '02',
@@ -30,7 +30,7 @@ const pillars = [
     summary: 'Structural and print design worth picking up off the shelf.',
     detail: 'From structural concepts to print-ready files, built to survive production, not just a render.',
     tags: ['Structural Design', 'Print', 'Prototyping'],
-    image: 'https://picsum.photos/seed/visulox-pillar-packaging/900/1200'
+    image: '/projects/PANDA_PIXELS/Chocolate_Bar_Mockup.jpg'
   },
   {
     index: '04',
@@ -235,7 +235,7 @@ onMounted(() => {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(0.5) contrast(1.05);
+      filter: grayscale(0.08) contrast(1.05);
     }
   }
 

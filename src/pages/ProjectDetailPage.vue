@@ -148,7 +148,7 @@ if (!project.value) {
   &__hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(5, 5, 5, 0.92), rgba(5, 5, 5, 0.1) 55%);
+    background: linear-gradient(to top, rgba(5, 5, 5, 1), rgba(5, 5, 5, 0) 37%);
   }
 
   &__hero-content {

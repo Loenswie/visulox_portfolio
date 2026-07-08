@@ -61,6 +61,15 @@
   }
 }
 
+// The difference blend is great over flat UI backgrounds but can vanish
+// against a busy fullscreen photo — force a plain, high-contrast cursor
+// with a hairline ring while a poster's fullscreen viewer is open.
+body.poster-lightbox-open .custom-cursor {
+  mix-blend-mode: normal;
+  background: var(--color-cream);
+  box-shadow: 0 0 0 1.5px var(--color-ink);
+}
+
 html:has(.custom-cursor) {
   @include m.fine-pointer-only {
     cursor: none;

@@ -42,7 +42,7 @@ const disciplines = [
 const education = [
   { year: '2015 – 2021', title: 'Secondary education, economics & modern languages', detail: 'graduated with distinction.' },
   { year: '2021 – 2024', title: "Bachelor's degree in Applied Computer Science", detail: 'graduated with great distinction.' },
-  { year: '2024 – 2026', title: 'Graduate program in Graphic Design, online & offline', detail: 'currently completing.' }
+  { year: '2024 – 2026', title: 'Graduate program in Graphic Design, online & offline', detail: 'graduated with great distinction.' }
 ]
 
 const experience = [
@@ -52,7 +52,7 @@ const experience = [
   { year: '2026', title: 'Graphic design internship', detail: 'campaigns, branding and website work.' }
 ]
 
-const tools = ['Figma', 'Illustrator', 'Photoshop', 'After Effects', 'Vue 3', 'TypeScript', 'GSAP', 'Three.js', 'Node.js', 'Blender']
+const tools = ['Figma', 'Illustrator', 'Photoshop', 'InDesign', 'After Effects', 'Premiere Pro', 'Lightroom', 'Vue', 'Angular', 'React', 'Laravel', 'HTML/CSS/JS', 'WordPress', 'TypeScript', 'Vue 3', 'TypeScript', 'GSAP', 'git' ]
 
 const heroEl = ref<HTMLElement | null>(null)
 const heroBackWordEl = ref<HTMLElement | null>(null)
@@ -330,7 +330,7 @@ onBeforeUnmount(() => {
       height: 100%;
       object-fit: cover;
       object-position: center 20%;
-      filter: grayscale(1) contrast(1.3);
+      filter: grayscale(1) contrast(1.25);
     }
   }
 
@@ -440,7 +440,7 @@ onBeforeUnmount(() => {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(1) contrast(1.1);
+      filter: grayscale(1) contrast(1.2);
     }
   }
 

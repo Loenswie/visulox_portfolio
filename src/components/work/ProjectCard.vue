@@ -53,7 +53,7 @@ const { setVariant, reset } = useCustomCursor()
       object-fit: cover;
       transform: scale(1.01);
       transition: transform 0.9s var(--ease-premium), filter 0.9s var(--ease-premium);
-      filter: grayscale(0.6) contrast(1.05);
+      filter: grayscale(0.08) contrast(1.05);
     }
   }
 

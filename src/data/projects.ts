@@ -5,7 +5,7 @@ export type ProjectCategory =
   | 'Web Design'
   | 'Development'
   | 'Campaigns'
-  | 'Photography'
+  | 'Packaging'
   | 'Digital Experiences'
 
 export interface Project {
@@ -37,7 +37,7 @@ export const categories: ProjectCategory[] = [
   'Web Design',
   'Development',
   'Campaigns',
-  'Photography',
+  'Packaging',
   'Digital Experiences'
 ]
 
