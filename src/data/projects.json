@@ -178,7 +178,7 @@
     "result": "A website and companion app-discovery flow that reads as loud and confident as the festival it represents, validated on real users rather than assumptions, and built to work just as well in the hand as it does on a full-size screen.",
     "services": ["UX Research & Testing", "Sitemap & IA", "Web Design", "Art Direction"],
     "technologies": ["Figma"],
-    "featured": true,
+    "featured": false,
     "externalLink": "",
     "behanceLink": ""
   }
