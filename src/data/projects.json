@@ -158,6 +158,28 @@
     "featured": false,
     "externalLink": "",
     "behanceLink": ""
+  },
+  {
+    "title": "THUNDER VALLEY",
+    "slug": "thunder-valley",
+    "showBehance": false,
+    "categories": ["Web Design"],
+    "thumbnail": "/projects/THUNDER_VALLEY/MacBook_Mockup_2.jpg",
+    "heroImage": "/projects/THUNDER_VALLEY/MacBook_Mockup_2.jpg",
+    "galleryImages": [
+      "/projects/THUNDER_VALLEY/MacBook_Mockup_2.jpg",
+      "/projects/THUNDER_VALLEY/UXA_Opdracht2_Website_mockup_V2.jpg",
+      "/projects/THUNDER_VALLEY/iPhone_Mockup_1.jpg",
+      "/projects/THUNDER_VALLEY/iPhone_Mockup_3.jpg"
+    ],
+    "shortDescription": "A bold, brutalist website for Thunder Valley, a rock festival built for a younger audience, spanning a homepage and a dedicated app-discovery page across desktop and mobile.",
+    "challenge": "Thunder Valley needed a site with the same raw energy as the festival itself: a bold, brutalist identity that could still guide a young audience clearly from homepage to lineup to tickets, on both desktop and mobile.",
+    "approach": "Built the full sitemap and UX flow from scratch, then designed a bold, brutalist layout anchored in oversized type, sharp red accents and high-contrast black to carry the festival's energy. Every screen, from the homepage to a dedicated app-discovery page, was tested on real people and refined based on how they actually used it, across both desktop and mobile.",
+    "result": "A website and companion app-discovery flow that reads as loud and confident as the festival it represents, validated on real users rather than assumptions, and built to work just as well in the hand as it does on a full-size screen.",
+    "services": ["UX Research & Testing", "Sitemap & IA", "Web Design", "Art Direction"],
+    "technologies": ["Figma"],
+    "featured": true,
+    "externalLink": "",
+    "behanceLink": ""
   }
 ]
-

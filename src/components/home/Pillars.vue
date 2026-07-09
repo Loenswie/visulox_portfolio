@@ -38,7 +38,7 @@ const pillars = [
     summary: 'Interfaces engineered to feel considered, not templated.',
     detail: 'Editorial layout, motion systems and interaction craft, built for people and tuned for performance.',
     tags: ['UX', 'UI', 'Art Direction'],
-    image: 'https://picsum.photos/seed/visulox-pillar-webdesign/900/1200'
+    image: '/projects/THUNDER_VALLEY/MacBook_Mockup_2_vertical.jpg'
   },
   {
     index: '05',
