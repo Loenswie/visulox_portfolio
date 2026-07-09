@@ -24,11 +24,9 @@ onMounted(() => {
 
     <div ref="gridEl" class="work-preview__grid container">
       <ProjectCard
-        v-for="(p, i) in projects"
+        v-for="p in projects"
         :key="p.slug"
         :project="p"
-        :size="i % 3 === 1 ? 'tall' : 'wide'"
-        :class="`work-preview__card work-preview__card--${i}`"
       />
     </div>
   </section>
@@ -62,30 +60,6 @@ onMounted(() => {
 
     @include m.tablet {
       grid-template-columns: 1fr;
-    }
-  }
-
-  &__card--0 {
-    grid-column: span 2;
-
-    @include m.laptop {
-      grid-column: span 1;
-    }
-  }
-
-  &__card--1 {
-    margin-top: var(--space-6);
-
-    @include m.tablet {
-      margin-top: 0;
-    }
-  }
-
-  &__card--3 {
-    grid-column: span 2;
-
-    @include m.laptop {
-      grid-column: span 1;
     }
   }
 }

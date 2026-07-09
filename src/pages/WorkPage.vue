@@ -51,6 +51,11 @@ onMounted(() => {
         </span>
       </h1>
 
+      <p class="type-body-lg work-page__subtitle">
+        No single fixed style: clean and minimal on one project, fun and playful on the next,
+        whatever actually serves the brief.
+      </p>
+
       <nav class="work-page__filters" aria-label="Filter projects by category">
         <button
           v-for="cat in filters"
@@ -66,11 +71,9 @@ onMounted(() => {
 
     <div ref="gridEl" class="work-page__grid container">
       <ProjectCard
-        v-for="(p, i) in filteredProjects"
+        v-for="p in filteredProjects"
         :key="p.slug"
         :project="p"
-        :size="i % 4 === 0 ? 'tall' : 'wide'"
-        :class="i % 4 === 0 ? 'work-page__card--tall' : ''"
       />
     </div>
 
@@ -90,6 +93,12 @@ onMounted(() => {
 
   &__title {
     margin-top: var(--space-2);
+  }
+
+  &__subtitle {
+    margin-top: var(--space-3);
+    max-width: 52ch;
+    color: var(--color-cream-dim);
   }
 
   // Real Vue spans (not SplitType's internal DOM) so --break can force the second word onto its own line.
@@ -150,14 +159,6 @@ onMounted(() => {
 
     @include m.tablet {
       grid-template-columns: 1fr;
-    }
-  }
-
-  &__card--tall {
-    grid-row: span 2;
-
-    @include m.tablet {
-      grid-row: auto;
     }
   }
 }

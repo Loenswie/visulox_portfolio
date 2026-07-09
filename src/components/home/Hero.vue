@@ -22,8 +22,8 @@ const heroReady = ref(false)
 const taglinePhrases = [
   'Designed. Built. Shipped.',
   'A designer who codes.',
-  'Still learning, still building.',
-  'Design first, code second.'
+  'Obsessed with the details.',
+  'Bold ideas, sharp execution.'
 ]
 const typedText = ref('')
 let typewriterTimeout: ReturnType<typeof setTimeout> | undefined

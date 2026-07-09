@@ -83,8 +83,8 @@
     "pressLink": "https://www.vrt.be/vrtnws/nl/2026/06/03/campagne-wereldfietsdag-brede-veilige-fietspaden-gfietsen/"
   },
   {
-    "title": "VLAANDERENLEEST 2026",
-    "slug": "vlaanderenleest-2026",
+    "title": "VLAANDERENLEEST",
+    "slug": "vlaanderenleest",
     "showBehance": false,
     "categories": ["Campaigns", "Digital Experiences"],
     "thumbnail": "/projects/VLAANDERENLEESTDAG/AFFICHE_PARK_V2.jpg",
@@ -108,8 +108,56 @@
     "result": "A cohesive, playful campaign that read the same whether you passed it on a station poster, scrolled past it on Instagram, or held the reading kit in your hands.",
     "services": ["Concept & Naming", "Campaign Direction", "Print & Layout"],
     "technologies": ["InDesign"],
-    "featured": true,
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
+  },
+  {
+    "title": "LUMORA",
+    "slug": "lumora",
+    "showBehance": false,
+    "categories": ["Campaigns", "Web Design"],
+    "thumbnail": "/projects/LUMORA/Free_Citylight_Mockup_1.jpg",
+    "heroImage": "/projects/LUMORA/LUMORA_AFFICHE.jpg",
+    "galleryImages": [
+      "/projects/LUMORA/Free_Citylight_Mockup_1.jpg",
+      "/projects/LUMORA/LUMORA_AFFICHE.jpg",
+      "/projects/LUMORA/LUMORA_WEBSITE.jpg",
+      "/projects/LUMORA/LUMORA_SAVETHEDATE.mp4"
+    ],
+    "shortDescription": "A light-themed event identity for MSK Gent, anchored in a poster, a website design and a motion social ad, all built around a single glowing key visual.",
+    "challenge": "LUMORA needed a visual language built entirely around light for an MSK Gent event, modern and sleek, but still carrying real art-historical weight.",
+    "approach": "Built the key visual around Emile Claus's painting De IJsvogel (The Kingfisher): its color palette and the shape of the river reworked into a cool, gradient-like form that reads as both projection and light. Extended the same key visual into a poster, a desktop and mobile website design, and a motion version for a social media ad.",
+    "result": "One glowing shape carrying the whole event, poster, website and social motion all reading as the same idea at a glance.",
+    "services": ["Key Visual Design", "Poster Design", "Web Design", "Motion Design"],
+    "technologies": ["Illustrator", "Photoshop", "Figma", "After Effects"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
+  },
+  {
+    "title": "CAPYBARISTA",
+    "slug": "capybarista",
+    "showBehance": false,
+    "categories": ["Branding"],
+    "thumbnail": "/projects/CAPYBARISTA/CAPYBARISTA_MUG.jpg",
+    "heroImage": "/projects/CAPYBARISTA/CAPYBARISTA_MUG.jpg",
+    "galleryImages": [
+      "/projects/CAPYBARISTA/CAPYBARISTA_MUG.jpg",
+      "/projects/CAPYBARISTA/CAPYBARISTA_STOREFRONT.jpg",
+      "/projects/CAPYBARISTA/CAPYBARISTA_INSTAGRAM.jpg",
+      "/projects/CAPYBARISTA/CAPYBARISTA_LETTERHEAD.jpg",
+      "/projects/CAPYBARISTA/CAPYBARISTA_BUSINESSCARD.jpg"
+    ],
+    "shortDescription": "A playful brand identity for Capybarista, a coffee bar where you can cuddle capybaras, cat-cafe style.",
+    "challenge": "Capybarista needed a brand as playful and huggable as the concept itself: a coffee bar built around cuddling capybaras.",
+    "approach": "Built the logo around a cup of coffee where the negative space in the milk foam reveals a capybara's head, then carried a reusable S-shaped coffee stain across the rest of the branding as a recurring mark. Extended the system into stationery, an Instagram presence, a storefront and merch like mugs.",
+    "result": "A cohesive, playful identity where even the smallest touch, a coffee stain shaped like the brand's own initial, ties everything back to the same idea.",
+    "services": ["Brand Strategy", "Logo Design", "Visual Identity", "Stationery & Merch Design"],
+    "technologies": ["Illustrator", "Photoshop"],
+    "featured": false,
     "externalLink": "",
     "behanceLink": ""
   }
 ]
+

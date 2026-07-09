@@ -34,7 +34,7 @@ const disciplines = [
   },
   {
     title: 'Development',
-    copy: 'Vue, TypeScript and GSAP used to actually ship the systems I design, with no handoff gap between the mockup and the browser.'
+    copy: 'Used to actually ship the systems I design myself, with no handoff gap between the mockup and the browser.'
   }
 ]
 
@@ -115,20 +115,36 @@ onBeforeUnmount(() => {
     </section>
 
     <section class="about-page__intro section container">
-      <div class="about-page__copy">
-        <p class="type-eyebrow">About Louis Lefebure</p>
-        <p class="type-body-lg about-page__lede">
-          VISULOX is, first and foremost, a graphic design practice, run by someone who also
-          refuses to stop coding. I'm a designer at the core, who happens to be able to build the
-          software that carries the vision too.
-        </p>
-        <p class="about-page__body">
-          Most studios split the two: someone designs, someone else implements, and the idea
-          erodes a little at every handoff. Design comes first here, every project starts as a
-          visual idea before it becomes anything else, but when a project calls for it, I can
-          carry it all the way into a real, working piece of software myself. That's the whole
-          philosophy behind "the art of creating your vision": vision isn't a mood board, it's a
-          thing you actually build.
+      <div class="about-page__intro-grid">
+        <div class="about-page__copy">
+          <p class="type-eyebrow">About Louis Lefebure</p>
+          <p class="type-body-lg about-page__lede">
+            I'm a proactive and detail-driven graphic designer, who also holds a degree in
+            software engineering. I studied Applied Computer Science before going back for a
+            second degree in Graphic Design, so I've always thought about a project through both
+            lenses at once.
+          </p>
+          <p class="about-page__body">
+            Most studios split the two: someone designs, someone else implements, and the idea
+            erodes a little at every handoff. Design comes first here, every project starts as a
+            visual idea before it becomes anything else, but I can carry it all the way into a real,
+            working piece of software myself when a project calls for it. I've done exactly that
+            during a professional internship and freelance work for small clients, translating
+            concepts into finished visual and digital work end to end. Quality and detail come
+            first regardless of the medium, I'd rather see one project through properly than rush
+            three. That's the whole philosophy behind "the art of creating your vision": vision
+            isn't a mood board, it's a thing you actually build.
+          </p>
+          <p class="about-page__body">
+            Range is another thing I lean on. I don't work in one fixed style, depending on the
+            brief that's meant anything from a tight, minimal identity to something loud and
+            playful, and everything in between, whatever actually serves the project instead of my
+            own habits.
+          </p>
+        </div>
+
+        <p class="about-page__quote" aria-hidden="true">
+          &ldquo;The art of<br />creating<br />your vision.&rdquo;
         </p>
       </div>
     </section>
@@ -350,8 +366,40 @@ onBeforeUnmount(() => {
     mix-blend-mode: difference;
   }
 
+  &__intro-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: var(--space-6);
+    align-items: end;
+
+    @include m.laptop {
+      grid-template-columns: 1fr;
+    }
+  }
+
   &__copy {
     max-width: 68ch;
+  }
+
+  &__quote {
+    justify-self: end;
+    align-self: end;
+    font-family: var(--font-display);
+    font-size: clamp(2.1rem, 4.6vw, 3.75rem);
+    line-height: 1.05;
+    letter-spacing: var(--tracking-tight);
+    font-weight: 700;
+    text-align: right;
+    text-transform: uppercase;
+    color: var(--color-cream-faint);
+    white-space: nowrap;
+
+    @include m.laptop {
+      justify-self: start;
+      margin-top: var(--space-4);
+      text-align: left;
+      white-space: normal;
+    }
   }
 
   &__lede {

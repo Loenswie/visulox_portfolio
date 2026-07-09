@@ -22,14 +22,14 @@ const pillars = [
     summary: 'One idea, carried consistently across every touchpoint.',
     detail: 'Art direction, key visuals and templated systems that scale across print, social and screen.',
     tags: ['Art Direction', 'Social', 'Print'],
-    image: 'https://picsum.photos/seed/visulox-pillar-campaigns/900/1200'
+    image: '/projects/GFIETST/GFIETST_AFFICHE_V1_overzicht.jpg'
   },
   {
     index: '03',
     title: 'Packaging',
     summary: 'Structural and print design worth picking up off the shelf.',
     detail: 'From structural concepts to print-ready files, built to survive production, not just a render.',
-    tags: ['Structural Design', 'Print', 'Prototyping'],
+    tags: ['Structural Design', 'Print'],
     image: '/projects/PANDA_PIXELS/Chocolate_Bar_Mockup.jpg'
   },
   {
@@ -37,7 +37,7 @@ const pillars = [
     title: 'Web Design',
     summary: 'Interfaces engineered to feel considered, not templated.',
     detail: 'Editorial layout, motion systems and interaction craft, built for people and tuned for performance.',
-    tags: ['UX', 'Art Direction', 'Motion'],
+    tags: ['UX', 'UI', 'Art Direction'],
     image: 'https://picsum.photos/seed/visulox-pillar-webdesign/900/1200'
   },
   {
@@ -45,7 +45,7 @@ const pillars = [
     title: 'Development',
     summary: 'The code that actually carries the vision through.',
     detail: 'Vue, TypeScript and a design-system mindset, where build quality is part of the craft.',
-    tags: ['Vue 3', 'TypeScript', 'Performance'],
+    tags: ['Engineering', 'Performance', 'Craft'],
     image: 'https://picsum.photos/seed/visulox-pillar-webdev/900/1200'
   }
 ]

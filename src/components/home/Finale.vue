@@ -36,8 +36,11 @@ onMounted(() => {
         <span class="finale__title-line"><SplitText text="into view." as="span" by="words" :delay="0.2" /></span>
       </h2>
 
+      <p class="finale__availability">Graduated June 2026 - open to junior / starter roles.</p>
+
       <div class="finale__actions">
         <MagneticButton label="Contact me" href="mailto:louis.lefebure@outlook.com" cursor-label="Say hi" />
+        <MagneticButton label="Download CV" href="/CV_Louis_Lefebure.pdf" variant="ghost" />
         <MagneticButton label="View projects" to="/work" variant="ghost" />
       </div>
 
@@ -106,6 +109,13 @@ onMounted(() => {
     &--accent {
       color: var(--color-accent);
     }
+  }
+
+  &__availability {
+    margin-top: var(--space-3);
+    font-size: var(--fs-body);
+    font-weight: 600;
+    color: rgba(5, 5, 5, 0.65);
   }
 
   &__actions {
