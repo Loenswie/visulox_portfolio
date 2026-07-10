@@ -18,6 +18,16 @@ function setMeta(name: string, content: string, attr: 'name' | 'property' = 'nam
   el.setAttribute('content', content)
 }
 
+function setCanonical(href: string) {
+  let el = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]')
+  if (!el) {
+    el = document.createElement('link')
+    el.setAttribute('rel', 'canonical')
+    document.head.appendChild(el)
+  }
+  el.setAttribute('href', href)
+}
+
 /** Lightweight, dependency-free SEO composable — updates title + OG/meta tags per route. */
 export function useHead(meta: () => HeadMeta) {
   watchEffect(() => {
@@ -37,5 +47,9 @@ export function useHead(meta: () => HeadMeta) {
       setMeta('og:image', image, 'property')
       setMeta('twitter:image', image)
     }
+
+    // Every route gets its own canonical URL — avoids duplicate-content dilution across pages.
+    setCanonical(`https://visulox.onrender.com${window.location.pathname}`)
+    setMeta('og:url', `https://visulox.onrender.com${window.location.pathname}`, 'property')
   })
 }

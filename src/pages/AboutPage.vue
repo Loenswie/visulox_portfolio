@@ -7,7 +7,7 @@ import { prefersReducedMotion } from '@/animations/motion'
 useHead(() => ({
   title: 'About | VISULOX',
   description:
-    'Louis Lefebure, the person behind VISULOX. A graphic designer working across branding, campaigns and digital experiences, with front-end development to bring it all to life.',
+    'Louis Lefebure, the person behind VISULOX. Grafisch ontwerper / graphic designer based in Zedelgem, near Bruges, West Flanders, working across branding, campaigns and digital experiences, with front-end development to bring it all to life.',
   image: '/Profielfoto_Grungy.jpg'
 }))
 

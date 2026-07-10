@@ -96,7 +96,7 @@ function goContact() {
 
     <div class="container footer__bottom">
       <p class="footer__clock">
-        <span class="footer__clock-line">Zedelgem  ·  {{ clockTime }}</span>
+        <span class="footer__clock-line">Zedelgem, West-Vlaanderen  ·  {{ clockTime }}</span>
         <span class="footer__clock-line footer__clock-line--dim">{{ clockDate }}</span>
       </p>
 

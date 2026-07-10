@@ -10,7 +10,7 @@ import PosterGallery from '@/components/work/PosterGallery.vue'
 
 useHead(() => ({
   title: 'Work | VISULOX',
-  description: 'Selected branding, graphic design and campaign work by VISULOX / Louis Lefebure, with web design and development to bring it to life.'
+  description: 'Selected branding, graphic design and campaign work by VISULOX / Louis Lefebure, grafisch ontwerper based in West-Vlaanderen, with web design and development to bring it to life.'
 }))
 
 const activeCategory = ref<string>('All')
