@@ -7,7 +7,7 @@ const stripEl = ref<HTMLElement | null>(null)
 
 const stats = [
   { value: 2, suffix: '', label: 'Years of Training' },
-  { value: 8, suffix: '+', label: 'Self-Initiated Projects' },
+  { value: 15, suffix: '+', label: 'Self-Initiated Projects' },
   { value: 18, suffix: '+', label: 'Tools & Technologies' },
   { value: 6, suffix: '', label: 'Creative Disciplines' }
 ]

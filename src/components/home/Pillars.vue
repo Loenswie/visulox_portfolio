@@ -46,7 +46,7 @@ const pillars = [
     summary: 'The code that actually carries the vision through.',
     detail: 'Vue, TypeScript and a design-system mindset, where build quality is part of the craft.',
     tags: ['Engineering', 'Performance', 'Craft'],
-    image: 'https://picsum.photos/seed/visulox-pillar-webdev/900/1200'
+    image: '/projects/PANDA_PIXELS/A3_1Ba_Mockup.jpg'
   }
 ]
 
