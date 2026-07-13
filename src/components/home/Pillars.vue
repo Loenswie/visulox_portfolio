@@ -30,7 +30,7 @@ const pillars = [
     summary: 'Structural and print design worth picking up off the shelf.',
     detail: 'From structural concepts to print-ready files, built to survive production, not just a render.',
     tags: ['Structural Design', 'Print'],
-    image: '/projects/PANDA_PIXELS/Chocolate_Bar_Mockup.jpg'
+    image: '/projects/REIN/Campagnebeeld-staand.jpg'
   },
   {
     index: '04',

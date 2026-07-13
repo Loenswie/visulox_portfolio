@@ -6,8 +6,8 @@ import { useCustomCursor } from '@/composables/useCustomCursor'
 const { state } = useCustomCursor()
 const cursorEl = ref<HTMLElement | null>(null)
 
-let quickX: ReturnType<typeof gsap.quickTo> | null = null
-let quickY: ReturnType<typeof gsap.quickTo> | null = null
+let quickX: ReturnType<typeof gsap.quickSetter> | null = null
+let quickY: ReturnType<typeof gsap.quickSetter> | null = null
 
 function onMove(e: PointerEvent) {
   quickX?.(e.clientX)
@@ -19,8 +19,10 @@ onMounted(() => {
   // xPercent/yPercent centering (recalculated against current size) so growing to 64px on hover stays centered.
   gsap.set(cursorEl.value, { xPercent: -50, yPercent: -50, rotation: 45 })
 
-  quickX = gsap.quickTo(cursorEl.value, 'x', { duration: 0.18, ease: 'power3.out' })
-  quickY = gsap.quickTo(cursorEl.value, 'y', { duration: 0.18, ease: 'power3.out' })
+  // quickSetter, not quickTo — an actual tween (even at duration: 0) can drop
+  // renders under rapid pointermove calls. This just writes the transform directly.
+  quickX = gsap.quickSetter(cursorEl.value, 'x', 'px')
+  quickY = gsap.quickSetter(cursorEl.value, 'y', 'px')
   window.addEventListener('pointermove', onMove, { passive: true })
 })
 
