@@ -181,5 +181,27 @@
     "featured": false,
     "externalLink": "",
     "behanceLink": ""
+  },
+  {
+    "title": "REIN",
+    "slug": "rein",
+    "showBehance": false,
+    "categories": ["Packaging", "Campaigns"],
+    "thumbnail": "/projects/REIN/Campagnebeeld-liggend.jpg",
+    "heroImage": "/projects/REIN/Campagnebeeld-liggend.jpg",
+    "galleryImages": [
+      "/projects/REIN/Campagnebeeld-liggend.jpg",
+      "/projects/REIN/kapvormen_rein.jpg",
+      "/projects/REIN/iPhone_15.jpg"
+    ],
+    "shortDescription": "Packaging, social media and a companion flyer for Rein, a natural soap and shampoo bar brand built on foraged Belgian herbs, launching three new scent variants.",
+    "challenge": "Rein needed packaging and launch materials for three new shampoo bar scents that still felt as handmade and personal as the product itself, made from herbs and flowers foraged locally, without tipping into looking amateurish or losing a more grown-up edge.",
+    "approach": "Built the packaging, social posts and an accompanying flyer around a fully custom logotype, hand-written and scanned, crossing out 'ordinary' with 'Rein' so the handmade character reads immediately. Paired it with a modern typeface for the rest of the text to keep things legible and a little more grown-up, then laid everything over an aged-paper texture, tinted a different shade per scent, so each bar reads as its own small, personal batch rather than a mass-produced item.",
+    "result": "A packaging and launch system for Wild Berry, Chamomile Fields and Mystic Spicewood that reads as handcrafted and fresh, carried consistently from the physical bar to social media to a small printed flyer introducing the new scents.",
+    "services": ["Packaging Design", "Social Media Design", "Print & Layout", "Hand-lettering"],
+    "technologies": ["Illustrator", "Photoshop", "InDesign"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
   }
 ]
