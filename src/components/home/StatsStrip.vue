@@ -2,12 +2,14 @@
 import { onMounted, ref } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import { counterOnScroll } from '@/animations/reveal'
+import { projects } from '@/data/projects'
 
 const stripEl = ref<HTMLElement | null>(null)
 
+// Tied to the actual project count, so this never drifts out of sync as work gets added or removed.
 const stats = [
   { value: 2, suffix: '', label: 'Years of Training' },
-  { value: 15, suffix: '+', label: 'Self-Initiated Projects' },
+  { value: projects.length, suffix: '+', label: 'Self-Initiated Projects' },
   { value: 18, suffix: '+', label: 'Tools & Technologies' },
   { value: 6, suffix: '', label: 'Creative Disciplines' }
 ]
