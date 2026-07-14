@@ -46,7 +46,23 @@ if (!project.value) {
 <template>
   <article v-if="project" class="project-detail">
     <header class="project-detail__hero">
-      <img :src="project.heroImage" :alt="project.title" class="project-detail__hero-img" fetchpriority="high" />
+      <video
+        v-if="isVideo(project.heroImage)"
+        :src="project.heroImage"
+        class="project-detail__hero-img project-detail__hero-img--video"
+        autoplay
+        loop
+        muted
+        playsinline
+        preload="auto"
+      />
+      <img
+        v-else
+        :src="project.heroImage"
+        :alt="project.title"
+        class="project-detail__hero-img"
+        fetchpriority="high"
+      />
       <div class="project-detail__hero-overlay" />
       <div class="project-detail__hero-content container">
         <ul class="project-detail__categories">
@@ -154,6 +170,12 @@ if (!project.value) {
     height: 100%;
     object-fit: cover;
     filter: grayscale(0.3);
+
+    // Video heroes stay at full, untouched saturation instead of the
+    // slight desaturation used on photo heroes.
+    &--video {
+      filter: none;
+    }
   }
 
   &__hero-overlay {

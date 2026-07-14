@@ -203,5 +203,79 @@
     "featured": false,
     "externalLink": "",
     "behanceLink": ""
+  },
+  {
+    "title": "TWO HIGH",
+    "slug": "two-high",
+    "showBehance": false,
+    "categories": ["Campaigns"],
+    "thumbnail": "/projects/TWO_HIGH/A2_CP_Opdracht2_flyer_mockup.jpg",
+    "heroImage": "/projects/TWO_HIGH/A2_CP_Opdracht2_voertuig_mockup_page-0001.jpg",
+    "galleryImages": [
+      "/projects/TWO_HIGH/A2_CP_Opdracht2_flyer_mockup.jpg",
+      "/projects/TWO_HIGH/A2_CP_Opdracht2_voertuig_mockup_page-0001.jpg"
+    ],
+    "shortDescription": "A flyer and vehicle livery for Sowl, a fictional footwear brand launching a bold, basketball-inspired sneaker, built for a school brief.",
+    "challenge": "Sowl needed launch materials for a new sneaker built around the copyline 'Two High Performers', with the strategy behind the concept as much a part of the brief as the design itself.",
+    "approach": "Took the copyline literally: the word 'HIGH' is drawn using the lines of a basketball court seen from above, so the sneaker reads as if it's flying above the court. Carried a bold, urban and sporty visual style through raw paper textures and the same court-line motif, photographed, retouched and cut out the shoe itself, then adapted the same system onto vehicle livery from a supplied technical spec sheet.",
+    "result": "A cohesive launch system, from flyer to a branded vehicle on the road, built around one literal idea instead of just a slogan.",
+    "services": ["Brand Strategy", "Concept Development", "Flyer Design", "Vehicle Livery", "Product Photography & Retouching"],
+    "technologies": ["Photoshop", "InDesign", "Illustrator"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
+  },
+  {
+    "title": "RISE OF",
+    "slug": "rise-of",
+    "showBehance": true,
+    "categories": ["Branding"],
+    "thumbnail": "/projects/RISE_OF/thumbnail.jpg",
+    "heroImage": "/projects/RISE_OF/A3_3_Mockup-visitekaartje.jpg",
+    "galleryImages": [
+      "/projects/RISE_OF/thumbnail.jpg",
+      "/projects/RISE_OF/A3_3_Mockup-visitekaartje.jpg",
+      "/projects/RISE_OF/Perfect_Binding_Brochure_Mockup_5.jpg",
+      "/projects/RISE_OF/A3_3_Mockup-extra-phne.png",
+      "/projects/RISE_OF/A4_1C_Social_Detail_V3_RISEOF_8.jpg",
+      "/projects/RISE_OF/RISEOF_Fabric_Detail.jpg",
+      "/projects/RISE_OF/RISEOF_Illuminated_Sign.png"
+    ],
+    "shortDescription": "A full brand identity for Rise Of, a real mixed reality escape room brand launching in Bruges, built to travel to any city.",
+    "challenge": "Rise Of needed an identity that read as genuinely futuristic and modern for a mixed reality escape room experience built around families and tourists, while still working as a system flexible enough to relaunch under any city name, starting with Bruges.",
+    "approach": "Built the mark itself as an R, a door as seen on a floor plan standing in for the rooms of an escape room, an arrow for stepping back in time, and a sword hilt, all at once, using the same sharp-cornered quarter-circle cutout that recurs through a custom, futuristic yet clean typeface. The color system is a fire gradient, tying into the historical settings the experiences are built around. Extended the mark itself into a set of icons, a sword, a flag, a speech bubble and more, and carried the same rectangular die-cut shape through the identity, from the business card to social media posts.",
+    "result": "A flexible identity system built from day one to relaunch under a new city name wherever the concept travels next, real enough that it was shortlisted as one of the contenders to bring Rise Of to life in Bruges.",
+    "services": ["Brand Strategy", "Logo & Icon System", "Visual Identity", "Brand Guidelines"],
+    "technologies": ["Illustrator", "Photoshop", "InDesign", "Lightroom"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": "https://www.behance.net/gallery/247855885/RISE-OF-Mixed-Reality-Escape-Room-Branding"
+  },
+  {
+    "title": "ALUMNI 25/26",
+    "slug": "alumni",
+    "showBehance": false,
+    "categories": ["Branding", "Web Design"],
+    "thumbnail": "/projects/OOG_ALUMNI/OOG_ALUMNI_Cover_iMac.jpg",
+    "heroImage": "/projects/OOG_ALUMNI/OOG_ALUMNI_Hero_Video.mp4",
+    "galleryImages": [
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Cover_iMac.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Book_Covers.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Book_Spread_Intro.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Spread_Profile_Moodboard.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Profile_iMac.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Spread_Battery_Easteregg.jpg",
+      "/projects/OOG_ALUMNI/WhatsApp Image 2026-05-24 at 13.29.13 1-2.jpg",
+      "/projects/OOG_ALUMNI/OOG_ALUMNI_Spread_Nawoord.jpg"
+    ],
+    "shortDescription": "An alumni book and companion website design for OOG (Online & Offline Graphic Design), built around a neobrutalist, retro-desktop visual language.",
+    "challenge": "OOG needed an alumni book and companion website that actually felt like something the direction's own graduates would want to keep, not another institutional yearbook, while still working as a shared cover format spanning the 2025 and 2026 classes.",
+    "approach": "Landed on neobrutalism as the visual language: bold, screen-native shapes paired with a retro, nostalgic edge, since the whole book reads as if you're paging through an old desktop. A macOS-style menu bar runs across every spread, complete with a running series of system notifications and small easter eggs, a battery icon that quietly drains as the book progresses, folder-style icons standing in for the book's own chapter structure, all carried through in bright, high-energy colors that tie the book firmly back to the direction's own digital-first identity.",
+    "result": "Voted in by more than 60 fellow students as the official alumni book and website for OOG's 2026 graduating class.",
+    "services": ["Book & Editorial Design", "Web Design (UX/UI)", "Visual Identity", "Art Direction"],
+    "technologies": ["InDesign", "Illustrator", "Photoshop", "Figma"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
   }
 ]

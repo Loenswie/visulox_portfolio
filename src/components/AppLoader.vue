@@ -19,7 +19,7 @@ onMounted(() => {
 
   const counterDuration = reduced ? 0.2 : 1.7
   // A short beat on the fully-revealed logo before the fade starts, instead of fading the instant it completes.
-  const holdDuration = reduced ? 0 : 0.1
+  const holdDuration = reduced ? 0 : 0.05
   const fadeDuration = reduced ? 0.2 : 0.9
 
   const tl = gsap.timeline({
