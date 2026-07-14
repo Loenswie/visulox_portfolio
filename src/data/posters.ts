@@ -11,7 +11,6 @@ export const posters: Poster[] = [
   { title: 'Ice Cold', image: '/POSTERS/IceCold.jpg' },
   { title: 'Love Handed - Japan', image: '/POSTERS/LoveHanded_Japan.jpg' },
   { title: 'Love Handed - Twilight', image: '/POSTERS/Lovehanded_Twilight_Inspired.jpg' },
-  { title: 'SEET', image: '/POSTERS/SEET.jpg' },
   { title: 'Vision', image: '/POSTERS/VISION.jpg' }
 ]
 
