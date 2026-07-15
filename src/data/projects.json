@@ -277,5 +277,29 @@
     "featured": false,
     "externalLink": "",
     "behanceLink": ""
+  },
+  {
+    "title": "50 JAAR BEISBROEK",
+    "slug": "50-jaar-natuurcentrum-beisbroek",
+    "showBehance": false,
+    "categories": ["Campaigns"],
+    "thumbnail": "/projects/50JAAR_BEISBROEK/A3_2A_Mockup.jpg",
+    "heroImage": "/projects/50JAAR_BEISBROEK/A3_2A_Campagnebeeld_Vierkant_V1.jpg",
+    "galleryImages": [
+      "/projects/50JAAR_BEISBROEK/A3_2A_Campagnebeeld_Liggend_V1.jpg",
+      "/projects/50JAAR_BEISBROEK/A3_2A_Mockup.jpg",
+      "/projects/50JAAR_BEISBROEK/Billboard_Banner_Mockup.jpg",
+      "/projects/50JAAR_BEISBROEK/BEISBROEK_Poster_V1.jpg",
+      "/projects/50JAAR_BEISBROEK/BEISBROEK_Detail_Birds.jpg"
+    ],
+    "shortDescription": "A 50th-anniversary campaign for Natuurcentrum Beisbroek in Bruges, built around a chestnut hot-air balloon key visual carried across posters, flyers and billboards.",
+    "challenge": "Natuurcentrum Beisbroek needed a 50th-anniversary campaign that could hold its own visually while still feeling like it belonged to the forest itself, warm and fantastical rather than corporate, spanning a key visual, posters, flyers and billboards.",
+    "approach": "Built the key visual around a photo-manipulated hot-air balloon made from a chestnut, carrying a family of birds, seen on location in Beisbroek's own forest, with smaller chestnuts floating alongside as extra balloons for the celebration. Garlands made from the forest's own leaves stand in for bunting, so the forest itself reads as celebrating its 50 years alongside the visitors. Paired it with a rough, bark-like typeface with sharp, curling details that nod to both a fairytale tone and the birds' own pointed beaks and feathers.",
+    "result": "Shortlisted as one of the top 3 candidates for the jubilee's official poster out of more than 70 entries.",
+    "services": ["Campaign Direction", "Key Visual Design", "Photomanipulation", "Print & Layout"],
+    "technologies": ["Photoshop", "Illustrator", "InDesign"],
+    "featured": false,
+    "externalLink": "",
+    "behanceLink": ""
   }
 ]
